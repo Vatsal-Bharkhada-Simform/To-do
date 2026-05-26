@@ -3,15 +3,16 @@ export default function Input({
 	onChange,
 	placeholder = "",
 	value = "",
+	className = "",
 	...props
-}) {
+}: React.InputHTMLAttributes<HTMLInputElement>) {
 	return (
 		<input
 			type={type}
 			onChange={onChange}
 			value={value}
 			placeholder={placeholder}
-			className="w-full p-2 text-sm font-normal border-none outline-none"
+			className={`p-2 text-sm font-normal border-none outline-none ${className}`}
 			{...props}
 		/>
 	);

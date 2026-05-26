@@ -15,13 +15,13 @@ export function todoReducer(prevState: ToDo[], action: ReducerAction): ToDo[] {
 			return [
 				...prevState.slice(0, action.index),
 				action.payload,
-				...prevState.slice(action.index),
+				...prevState.slice(action.index + 1),
 			];
 
 		case "DELETE":
 			return prevState.filter(
 				(item, index) =>
-					item.id === action.payload.id && index === action.index
+					item.id !== action.payload.id && index !== action.index
 			);
 
 		default:

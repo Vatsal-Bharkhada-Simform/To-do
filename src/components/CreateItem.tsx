@@ -15,10 +15,12 @@ export default function CreateItem() {
 		e.preventDefault();
 		console.log("Clicked: ", e);
 
-		if(task === ""){
+		if (task === "") {
 			alert("Cannot create empty task");
 			return;
 		}
+
+		setTask("");
 
 		dispatch({
 			type: "ADD",
@@ -34,21 +36,22 @@ export default function CreateItem() {
 	return (
 		<>
 			<header className="">
-				<h1 className="text-2xl font-bold">Your Todo</h1>
+				<h1 className="text-3xl font-extrabold">Your Todo</h1>
 			</header>
 			<div>
-				<form onSubmit={handleSubmit} className="p-2 rounded-4xl flex flex-row gap-2 bg-gray-100">
+				<form
+					onSubmit={handleSubmit}
+					className="p-2 rounded-4xl flex flex-row gap-2 bg-gray-100"
+				>
 					<Input
 						placeholder={"Add task"}
 						value={task}
 						key={"TodoInput"}
 						onChange={handleInputChange}
-						name="to-do input"
+						name="to-do-input"
+						className="rounded-4xl w-full"
 					/>
-					<Button
-						variant="PRIMARY"
-						type="submit"
-					>
+					<Button variant="PRIMARY" type="submit">
 						Add task
 					</Button>
 				</form>
