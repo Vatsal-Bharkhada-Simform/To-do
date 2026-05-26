@@ -7,7 +7,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 
 const Button: React.FC<ButtonProps> = function (props: ButtonProps) {
 	let buttonStyles: string =
-		"px-4 py-2 cursor-pointer text-sm transition-all ";
+		"px-4 py-2 cursor-pointer text-sm transition-all text-nowrap ";
 
 	if (props.variant === "PRIMARY") {
 		buttonStyles += primary;

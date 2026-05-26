@@ -11,7 +11,7 @@ export default function Input({
 			onChange={onChange}
 			value={value}
 			placeholder={placeholder}
-			className="w-full p-2 font-normal border-none outline-none"
+			className="w-full p-2 text-sm font-normal border-none outline-none"
 			{...props}
 		/>
 	);
