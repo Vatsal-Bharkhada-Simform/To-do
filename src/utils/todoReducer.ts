@@ -1,0 +1,30 @@
+import type { ReducerAction, ToDo } from "../types/to_do_type";
+
+export function todoReducer(prevState: ToDo[], action: ReducerAction): ToDo[] {
+	switch (action.type) {
+		case "ADD":
+			return [
+				...prevState,
+				{
+					...action.payload,
+					id: (prevState.at(-1)?.id ?? 0) + 1,
+				},
+			];
+
+		case "UPDATE":
+			return [
+				...prevState.slice(0, action.index),
+				action.payload,
+				...prevState.slice(action.index),
+			];
+
+		case "DELETE":
+			return prevState.filter(
+				(item, index) =>
+					item.id === action.payload.id && index === action.index
+			);
+
+		default:
+			throw new Error("Invalid reducer action passed");
+	}
+}
