@@ -21,7 +21,7 @@ export default function ToDoItem({
 
 	return (
 		<li className="px-4 py-2 rounded-2xl flex justify-between items-center hover:bg-gray-50 cursor-pointer">
-			<div className="flex items-center gap-2">
+			<div className="flex flex-1 items-center gap-2">
 				<Input
 					type="checkbox"
 					className={"accent-blue-500"}
@@ -29,7 +29,7 @@ export default function ToDoItem({
 					checked={toDo.status === "COMPLETED"}
 				/>
 				{toDo.status === "COMPLETED" ? (
-					<div className="line-through text-sm px-2">
+					<div className="line-through text-gray-400 text-base px-2">
 						{toDo.title}
 					</div>
 				) : (
@@ -39,7 +39,7 @@ export default function ToDoItem({
 							setInputText(e.target.value)
 						}
 						onBlur={() => handleUpdate(toDo, inputText)}
-						className="max-w-full min-w-0"
+						className="w-full max-w-full min-w-0"
 					/>
 				)}
 			</div>

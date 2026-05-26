@@ -11,7 +11,7 @@ const Button: React.FC<ButtonProps> = function ({
 	...props
 }: ButtonProps) {
 	let buttonStyles: string =
-		"px-2 py-2 cursor-pointer text-sm transition-all text-nowrap ";
+		"px-2 py-2 cursor-pointer text-base transition-all text-nowrap ";
 
 	if (props.variant === "PRIMARY") {
 		buttonStyles += primary;

@@ -12,7 +12,7 @@ export function todoReducer(prevState: ToDo[], action: ReducerAction): ToDo[] {
 			];
 
 		case "UPDATE":
-			if(!action.index) throw new Error("Invalid reducer update call");
+			if(action.index === undefined) throw new Error("Invalid reducer update call");
 			return [
 				...prevState.slice(0, action.index),
 				action.payload,

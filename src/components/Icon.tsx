@@ -6,7 +6,7 @@ export default function Icon({
 	id: string;
 }) {
 	return (
-		<svg className="pointer-events-none w-4 aspect-square">
+		<svg className="pointer-events-none w-[1.2rem] aspect-square">
 			<use href={`${path}#${id}`}></use>
 		</svg>
 	);

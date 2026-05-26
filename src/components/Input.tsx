@@ -12,7 +12,7 @@ export default function Input({
 			onChange={onChange}
 			value={value}
 			placeholder={placeholder}
-			className={`p-2 text-sm font-normal border-none outline-none ${className}`}
+			className={`p-2 text-base font-normal border-none outline-none ${className}`}
 			{...props}
 		/>
 	);
