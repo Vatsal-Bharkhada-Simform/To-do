@@ -1,5 +1,5 @@
 export default function Icon({
-	path = "/public/sprite.svg",
+	path = `${import.meta.env.BASE_URL}sprite.svg`,
 	id = "",
 }: {
 	path?: string;
