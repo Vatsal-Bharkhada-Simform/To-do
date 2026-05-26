@@ -1,0 +1,57 @@
+import { useContext } from "react";
+import { ToDoContext } from "../context/ToDoContext";
+import ToDoItem from "./ToDoItem";
+import type { ToDo } from "../types/to_do_type";
+
+export default function ToDoList() {
+	const { toDo, dispatch } = useContext(ToDoContext);
+
+	function toggleStatus(index: number, toDo: ToDo) {
+		dispatch({
+			type: "UPDATE",
+			payload: {
+				...toDo,
+				status: toDo.status === "COMPLETED" ? "PENDING" : "COMPLETED",
+			},
+			index: index,
+		});
+	}
+
+	function handleDelete(index: number, toDo: ToDo) {
+		dispatch({
+			type: "DELETE",
+			payload: toDo,
+			index: index,
+		});
+	}
+
+	function handleUpdate(index: number, toDo: ToDo, newText: string) {
+		if (newText.trim() === toDo.title) return;
+		else {
+			dispatch({
+				type: "UPDATE",
+				payload: {
+					...toDo,
+					title: newText,
+				},
+				index: index,
+			});
+		}
+	}
+
+	return (
+		<ul className="max-w-full flex flex-col gap-2 list-none overflow-y-auto">
+			{toDo.map((item, index) => {
+				return (
+					<ToDoItem
+						toDo={item}
+						key={item.id}
+						toggleStatus={toggleStatus.bind(null, index)}
+						handleDelete={handleDelete.bind(null, index)}
+						handleUpdate={handleUpdate.bind(null, index)}
+					/>
+				);
+			})}
+		</ul>
+	);
+}
