@@ -7,7 +7,13 @@ export default function ToDoContextProvider({ children }) {
 	const [toDo, dispatch] = useReducer(todoReducer, fetchToDO());
 
 	useEffect(() => {
-		localStorage.setItem("TO_DO_ITEMS", JSON.stringify(toDo));
+		localStorage.setItem(
+			"TO_DO_ITEMS",
+			JSON.stringify({
+				date: new Date().toISOString().split("T")[0],
+				toDo: toDo
+			})
+		);
 	}, [toDo]);
 
 	const ctxValue = {

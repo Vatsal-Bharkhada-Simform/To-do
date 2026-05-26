@@ -7,14 +7,17 @@ export function fetchToDO(): ToDo[] {
 		if (!toDoData) return [];
 
 		const parsedData = JSON.parse(toDoData);
+		console.log("Fetched to-do: ", parsedData);
 
-		if (!Array.isArray(parsedData)) {
+		if (!parsedData.date || !parsedData.toDo || !Array.isArray(parsedData.toDo)) {
 			return [];
 		}
 
-		console.log("Fetched to-do: ", parsedData);
-
-		return parsedData.filter(
+		if (parsedData.date !== new Date().toISOString().split("T")[0]){
+			return [];
+		}
+		
+		return parsedData.toDo.filter(
 			(task) => task?.title && task?.id && task?.status && task?.createdAt
 		);
 	} catch {

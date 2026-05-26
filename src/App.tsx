@@ -1,9 +1,12 @@
-import "./App.css";
+import ToDoContextProvider from "./context/ToDoContextProvider";
+import Content from "./layout/Content";
 
 function App() {
 	return (
 		<>
-			<h1>Hii</h1>
+			<ToDoContextProvider>
+				<Content />
+			</ToDoContextProvider>
 		</>
 	);
 }
