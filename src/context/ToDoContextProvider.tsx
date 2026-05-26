@@ -11,7 +11,7 @@ export default function ToDoContextProvider({ children }) {
 			"TO_DO_ITEMS",
 			JSON.stringify({
 				date: new Date().toISOString().split("T")[0],
-				toDo: toDo
+				toDo: toDo,
 			})
 		);
 	}, [toDo]);
