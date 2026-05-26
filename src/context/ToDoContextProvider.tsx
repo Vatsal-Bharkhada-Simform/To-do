@@ -1,9 +1,9 @@
-import { useEffect, useReducer } from "react";
+import { useEffect, useReducer, type ReactElement } from "react";
 import { ToDoContext } from "./ToDoContext";
 import { todoReducer } from "../utils/todoReducer";
 import { fetchToDO } from "../utils/fetchToDo";
 
-export default function ToDoContextProvider({ children }) {
+export default function ToDoContextProvider({ children } : {children: ReactElement}) {
 	const [toDo, dispatch] = useReducer(todoReducer, fetchToDO());
 
 	useEffect(() => {

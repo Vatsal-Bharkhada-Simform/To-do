@@ -22,7 +22,7 @@ export function fetchToDO(): ToDo[] {
 		}
 
 		return parsedData.toDo.filter(
-			(task) => task?.title && task?.id && task?.status && task?.createdAt
+			(task: ToDo) => task?.title && task?.id && task?.status && task?.createdAt
 		);
 	} catch {
 		return [];
