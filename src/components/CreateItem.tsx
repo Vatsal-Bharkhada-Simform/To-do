@@ -36,7 +36,7 @@ export default function CreateItem() {
 	return (
 		<>
 			<header className="">
-				<h1 className="text-3xl font-extrabold">Your Todo</h1>
+				<h1 className="text-4xl font-extrabold">Your Todo</h1>
 			</header>
 			<div>
 				<form
