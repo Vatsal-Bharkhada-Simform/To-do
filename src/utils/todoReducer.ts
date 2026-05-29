@@ -34,7 +34,7 @@ export function todoReducer(prevState: ToDo[], action: ReducerAction): ToDo[] {
 
 function expired() {
 	return (
-		JSON.parse(localStorage.getItem("TO_DO_ITEMS"))?.date !==
+		JSON.parse(localStorage.getItem("TO_DO_ITEMS") ?? "")?.date !==
 		new Date().toISOString().split("T")[0]
 	);
 }
