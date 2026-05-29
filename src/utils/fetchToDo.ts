@@ -7,7 +7,6 @@ export function fetchToDO(): ToDo[] {
 		if (!toDoData) return [];
 
 		const parsedData = JSON.parse(toDoData);
-		console.log("Fetched to-do: ", parsedData);
 
 		if (
 			!parsedData.date ||
@@ -18,6 +17,7 @@ export function fetchToDO(): ToDo[] {
 		}
 
 		if (parsedData.date !== new Date().toISOString().split("T")[0]) {
+			localStorage.removeItem("TO_DO_ITEMS");
 			return [];
 		}
 

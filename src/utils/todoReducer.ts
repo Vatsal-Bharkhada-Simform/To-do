@@ -1,6 +1,7 @@
 import type { ReducerAction, ToDo } from "../types/to_do_type";
 
 export function todoReducer(prevState: ToDo[], action: ReducerAction): ToDo[] {
+	if (expired()) return [];
 	switch (action.type) {
 		case "ADD":
 			return [
@@ -29,4 +30,11 @@ export function todoReducer(prevState: ToDo[], action: ReducerAction): ToDo[] {
 		default:
 			throw new Error("Invalid reducer action passed");
 	}
+}
+
+function expired() {
+	return (
+		JSON.parse(localStorage.getItem("TO_DO_ITEMS"))?.date !==
+		new Date().toISOString().split("T")[0]
+	);
 }
