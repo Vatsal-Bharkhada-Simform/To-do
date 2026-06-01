@@ -11,6 +11,17 @@ type ToDoItemProps = {
 	handleUpdate: (toDo: ToDo, newText: string) => void;
 };
 
+function getFormattedDate(date: string | Date) {
+	return (
+		new Date(date).toDateString().split(" ").slice(1, -1).join(" ") +
+		", " +
+		new Date(date).toLocaleTimeString("UTC", {
+			hour: "numeric",
+			minute: "2-digit",
+		})
+	);
+}
+
 export default function ToDoItem({
 	toDo,
 	toggleStatus,
@@ -20,7 +31,10 @@ export default function ToDoItem({
 	const [inputText, setInputText] = useState(toDo.title);
 
 	return (
-		<li className="px-4 py-2 rounded-2xl flex justify-between items-center hover:bg-gray-50 cursor-pointer">
+		<li className="relative px-4 py-2 rounded-2xl flex justify-between items-center hover:bg-gray-50 cursor-pointer overflow-visible group">
+			<span className="absolute right-full mr-4 top-1/2 -translate-y-1/2 z-20 whitespace-nowrap text-gray-400 opacity-0 group-hover:opacity-100 transition-all">
+				{getFormattedDate(toDo.createdAt)}
+			</span>
 			<div className="flex flex-1 items-center gap-2 overflow-x-hidden">
 				<Input
 					type="checkbox"
@@ -44,7 +58,7 @@ export default function ToDoItem({
 				)}
 			</div>
 			<div>
-				<Button variant="DANGER" onClick={() => handleDelete(toDo)}>
+				<Button variant="DANGER" onClick={() => handleDelete(toDo)} className="opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto">
 					<Icon id="trashBin" />
 				</Button>
 			</div>

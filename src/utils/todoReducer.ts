@@ -17,8 +17,8 @@ export function todoReducer(prevState: ToDo[], action: ReducerAction): ToDo[] {
 				throw new Error("Invalid reducer update call");
 			return [
 				...prevState.slice(0, action.index),
-				action.payload,
 				...prevState.slice(action.index + 1),
+				action.payload,
 			];
 
 		case "DELETE":

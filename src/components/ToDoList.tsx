@@ -40,7 +40,7 @@ export default function ToDoList() {
 	}
 
 	return (
-		<ul className="max-w-full flex flex-col gap-2 list-none overflow-y-auto">
+		<ul className="w-150 max-w-full flex flex-col gap-2 list-none pb-24">
 			{toDo.map((item, index) => {
 				return (
 					<ToDoItem

@@ -34,7 +34,7 @@ export default function CreateItem() {
 	}
 
 	return (
-		<>
+		<div className="w-150 max-w-full flex flex-col gap-4 sticky top-0 bg-white z-20 pt-20 pb-4">
 			<header className="">
 				<h1 className="text-4xl font-extrabold">Your Todo</h1>
 			</header>
@@ -56,6 +56,6 @@ export default function CreateItem() {
 					</Button>
 				</form>
 			</div>
-		</>
+		</div>
 	);
 }
