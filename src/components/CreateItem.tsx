@@ -2,13 +2,22 @@ import { useContext, useState } from "react";
 import Input from "./Input";
 import Button from "./Button";
 import { ToDoContext } from "../context/ToDoContext";
+import Dropdown from "./Dropdown";
+
+const filters = ["All", "Completed", "Incomplete"];
 
 export default function CreateItem() {
 	const [task, setTask] = useState("");
+	const [selectedFilter, setSelectedFilter] = useState("All");
+
 	const { dispatch } = useContext(ToDoContext);
 
 	function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
 		setTask(e.target.value);
+	}
+
+	function handleFilterChange(newValue: string) {
+		setSelectedFilter(newValue);
 	}
 
 	function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
@@ -34,11 +43,11 @@ export default function CreateItem() {
 	}
 
 	return (
-		<div className="w-150 max-w-full flex flex-col gap-4 sticky top-0 bg-white z-20 pt-20 pb-4">
+		<div className="w-150 max-w-full flex flex-col gap-4 sticky top-0 bg-white z-20 pt-20">
 			<header className="">
 				<h1 className="text-4xl font-extrabold">Your Todo</h1>
 			</header>
-			<div>
+			<div className="flex flex-col gap-4">
 				<form
 					onSubmit={handleSubmit}
 					className="p-2 rounded-4xl flex flex-row gap-2 bg-gray-100"
@@ -55,6 +64,13 @@ export default function CreateItem() {
 						Add task
 					</Button>
 				</form>
+				<div className="w-full">
+					<Dropdown
+						options={filters}
+						value={selectedFilter}
+						onChange={handleFilterChange}
+					/>
+				</div>
 			</div>
 		</div>
 	);
