@@ -3,26 +3,26 @@ import Input from "./Input";
 import Button from "./Button";
 import { ToDoContext } from "../context/ToDoContext";
 import Dropdown from "./Dropdown";
+import type { FilterOptions } from "../types/to_do_type";
 
-const filters = ["All", "Completed", "Incomplete"];
+const filters: FilterOptions[] = ["All", "Completed", "Incomplete"];
 
 export default function CreateItem() {
 	const [task, setTask] = useState("");
-	const [selectedFilter, setSelectedFilter] = useState("All");
 
-	const { dispatch } = useContext(ToDoContext);
+	const { dispatch, filterOptions, setFilterOptions } =
+		useContext(ToDoContext);
 
 	function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
 		setTask(e.target.value);
 	}
 
 	function handleFilterChange(newValue: string) {
-		setSelectedFilter(newValue);
+		setFilterOptions(newValue);
 	}
 
 	function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
 		e.preventDefault();
-		console.log("Clicked: ", e);
 
 		if (task === "") {
 			alert("Cannot create empty task");
@@ -67,7 +67,7 @@ export default function CreateItem() {
 				<div className="w-full">
 					<Dropdown
 						options={filters}
-						value={selectedFilter}
+						value={filterOptions}
 						onChange={handleFilterChange}
 					/>
 				</div>

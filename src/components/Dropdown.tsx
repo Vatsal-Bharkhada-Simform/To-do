@@ -43,7 +43,7 @@ export default function Dropdown({ ...props }: Dropdown) {
 					<ul>
 						{props.options.map((option, index) => {
 							return (
-								<li key={String(option + index)}>
+								<li key={String(option) + index}>
 									<button
 										className={`w-full flex gap-2 border-none outline-none px-4 py-2 rounded-lg ${props.value === option ? "bg-blue-100 text-blue-600" : "bg-transparent text-gray-700 hover:bg-blue-50 focus:bg-blue-50"}`}
 										onClick={() => props.onChange(option)}

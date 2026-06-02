@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { memo, useEffect, useRef, useState } from "react";
 import type { ToDo } from "../types/to_do_type";
 import Button from "./Button";
 import Icon from "./Icon";
@@ -24,7 +24,7 @@ function getFormattedDate(date: string | Date) {
 
 type EditFlags = "EDIT_ON" | "EDITED" | "EDIT_OFF";
 
-export default function ToDoItem({
+const ToDoItem = memo(function ({
 	toDo,
 	toggleStatus,
 	handleDelete,
@@ -104,4 +104,6 @@ export default function ToDoItem({
 			</div>
 		</li>
 	);
-}
+});
+
+export default ToDoItem;

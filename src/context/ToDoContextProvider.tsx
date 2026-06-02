@@ -1,7 +1,8 @@
-import { useEffect, useReducer, type ReactElement } from "react";
+import { useEffect, useReducer, useState, type ReactElement } from "react";
 import { ToDoContext } from "./ToDoContext";
 import { todoReducer } from "../utils/todoReducer";
 import { fetchToDO } from "../utils/fetchToDo";
+import type { ToDo } from "../types/to_do_type";
 
 export default function ToDoContextProvider({
 	children,
@@ -9,6 +10,7 @@ export default function ToDoContextProvider({
 	children: ReactElement;
 }) {
 	const [toDo, dispatch] = useReducer(todoReducer, undefined, fetchToDO);
+	const [filterOptions, setFilterOptions] = useState("All");
 
 	useEffect(() => {
 		localStorage.setItem(
@@ -20,8 +22,19 @@ export default function ToDoContextProvider({
 		);
 	}, [toDo]);
 
+	let toDos: ToDo[];
+	if (filterOptions === "Incomplete") {
+		toDos = toDo.filter((item) => item.status === "PENDING");
+	} else if (filterOptions === "Completed") {
+		toDos = toDo.filter((item) => item.status === "COMPLETED");
+	} else {
+		toDos = toDo;
+	}
+
 	const ctxValue = {
-		toDo: toDo,
+		toDo: toDos,
+		filterOptions: filterOptions,
+		setFilterOptions: setFilterOptions,
 		dispatch: dispatch,
 	};
 

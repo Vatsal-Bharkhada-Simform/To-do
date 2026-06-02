@@ -1,3 +1,5 @@
+import type { Dispatch, SetStateAction } from "react";
+
 type ToDo = {
 	title: string;
 	id: number;
@@ -5,8 +7,12 @@ type ToDo = {
 	createdAt: Date;
 };
 
+type FilterOptions = "All" | "Completed" | "Incomplete";
+
 type ToDoContextType = {
 	toDo: ToDo[];
+	filterOptions: string;
+	setFilterOptions: Dispatch<SetStateAction<string>>;
 	dispatch: React.ActionDispatch<[action: ReducerAction]>;
 };
 
@@ -16,4 +22,4 @@ type ReducerAction = {
 	index?: number;
 };
 
-export type { ToDo, ToDoContextType, ReducerAction };
+export type { ToDo, ToDoContextType, ReducerAction, FilterOptions };
