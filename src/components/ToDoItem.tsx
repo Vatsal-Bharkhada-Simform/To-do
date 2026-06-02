@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { ToDo } from "../types/to_do_type";
 import Button from "./Button";
 import Icon from "./Icon";
@@ -22,13 +22,38 @@ function getFormattedDate(date: string | Date) {
 	);
 }
 
+type EditFlags = "EDIT_ON" | "EDITED" | "EDIT_OFF";
+
 export default function ToDoItem({
 	toDo,
 	toggleStatus,
 	handleDelete,
 	handleUpdate,
 }: ToDoItemProps) {
-	const [inputText, setInputText] = useState(toDo.title);
+	const [editMode, setEditMode] = useState<EditFlags>("EDIT_OFF");
+	const inputRef = useRef<HTMLInputElement | null>(null);
+
+	function handleOnBlur(toDo: ToDo) {
+		if (inputRef.current) {
+			handleUpdate(toDo, inputRef.current.value);
+			setEditMode("EDITED");
+		}
+	}
+
+	function handleToggleEdit() {
+		console.log("2");
+		if (editMode === "EDIT_OFF") {
+			setEditMode("EDIT_ON");
+		} else {
+			setEditMode("EDIT_OFF");
+		}
+	}
+
+	useEffect(() => {
+		if (inputRef.current && editMode === "EDIT_ON") {
+			inputRef.current.focus();
+		}
+	}, [editMode]);
 
 	return (
 		<li className="relative px-4 py-2 rounded-2xl flex justify-between items-center hover:bg-gray-50 cursor-pointer overflow-visible group">
@@ -40,25 +65,40 @@ export default function ToDoItem({
 					type="checkbox"
 					className={"accent-blue-500"}
 					onChange={() => toggleStatus(toDo)}
+					value={toDo.status}
 					checked={toDo.status === "COMPLETED"}
 				/>
-				{toDo.status === "COMPLETED" ? (
-					<div className="line-through text-gray-400 text-base px-2 wrap-break-word max-w-full">
-						{toDo.title}
-					</div>
-				) : (
+				{editMode === "EDIT_ON" ? (
 					<Input
-						value={inputText}
-						onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-							setInputText(e.target.value)
-						}
-						onBlur={() => handleUpdate(toDo, inputText)}
+						id={toDo.title + toDo.id}
+						ref={inputRef}
+						defaultValue={toDo.title}
+						onBlur={() => handleOnBlur(toDo)}
 						className="w-full max-w-full min-w-0 wrap-break-word"
 					/>
+				) : (
+					<div
+						className={`${toDo.status === "COMPLETED" && "line-through text-gray-400"} text-base px-2 wrap-break-word max-w-full`}
+					>
+						{toDo.title}
+					</div>
 				)}
 			</div>
 			<div>
-				<Button variant="DANGER" onClick={() => handleDelete(toDo)} className="opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto">
+				{toDo.status !== "COMPLETED" && (
+					<Button
+						variant="SECONDARY"
+						onClick={handleToggleEdit}
+						className="opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto"
+					>
+						<Icon id="edit" />
+					</Button>
+				)}
+				<Button
+					variant="DANGER"
+					onClick={() => handleDelete(toDo)}
+					className="opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto"
+				>
 					<Icon id="trashBin" />
 				</Button>
 			</div>
