@@ -5,7 +5,7 @@ import Input from "./Input";
 import Button from "./Button";
 import Dropdown from "./Dropdown";
 
-const filters: FilterOptions[] = ["All", "Completed", "Incomplete"];
+const filters: Array<FilterOptions> = ["All", "Completed", "Incomplete"];
 
 export default function CreateItem() {
 	const [task, setTask] = useState("");

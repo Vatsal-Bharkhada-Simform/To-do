@@ -1,6 +1,6 @@
 import type { ReducerAction, ToDo } from "../types/to_do_type";
 
-export function todoReducer(prevState: ToDo[], action: ReducerAction): ToDo[] {
+export function todoReducer(prevState: Array<ToDo>, action: ReducerAction): Array<ToDo> {
 	if (expired()) return [];
 	switch (action.type) {
 		case "ADD":

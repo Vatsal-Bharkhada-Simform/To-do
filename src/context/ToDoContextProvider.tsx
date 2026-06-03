@@ -22,7 +22,7 @@ export default function ToDoContextProvider({
 		);
 	}, [toDo]);
 
-	let toDos: ToDo[];
+	let toDos: Array<ToDo>;
 	if (filterOptions === "Incomplete") {
 		toDos = toDo.filter((item) => item.status === "PENDING");
 	} else if (filterOptions === "Completed") {

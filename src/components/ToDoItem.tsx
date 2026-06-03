@@ -11,6 +11,7 @@ type ToDoItemProps = {
 	handleDelete: ({ toDo }: { toDo: ToDo }) => void;
 	handleUpdate: ({ toDo, newText }: { toDo: ToDo; newText: string }) => void;
 };
+
 type EditFlags = "EDIT_ON" | "EDITED" | "EDIT_OFF";
 
 const ToDoItem = memo(function ({

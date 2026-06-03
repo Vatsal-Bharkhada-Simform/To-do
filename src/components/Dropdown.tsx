@@ -3,7 +3,7 @@ import Icon from "./Icon";
 
 interface Dropdown {
 	placeholer?: string;
-	options: readonly string[];
+	options: readonly string[]; //
 	value?: string;
 	onChange: (newValue: string) => void;
 	className?: string;

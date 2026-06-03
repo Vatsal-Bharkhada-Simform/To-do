@@ -1,6 +1,6 @@
 import type { ToDo } from "../types/to_do_type";
 
-export function fetchToDO(): ToDo[] {
+export function fetchToDO(): Array<ToDo> {
 	try {
 		const toDoData = localStorage.getItem("TO_DO_ITEMS");
 
