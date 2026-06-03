@@ -3,25 +3,14 @@ import type { ToDo } from "../types/to_do_type";
 import Button from "./Button";
 import Icon from "./Icon";
 import Input from "./Input";
+import getFormattedDate from "../utils/formatDate";
 
 type ToDoItemProps = {
 	toDo: ToDo;
-	toggleStatus: (toDo: ToDo) => void;
-	handleDelete: (toDo: ToDo) => void;
-	handleUpdate: (toDo: ToDo, newText: string) => void;
+	toggleStatus: ({ toDo }: { toDo: ToDo }) => void;
+	handleDelete: ({ toDo }: { toDo: ToDo }) => void;
+	handleUpdate: ({ toDo, newText }: { toDo: ToDo; newText: string }) => void;
 };
-
-function getFormattedDate(date: string | Date) {
-	return (
-		new Date(date).toDateString().split(" ").slice(1, -1).join(" ") +
-		", " +
-		new Date(date).toLocaleTimeString("UTC", {
-			hour: "numeric",
-			minute: "2-digit",
-		})
-	);
-}
-
 type EditFlags = "EDIT_ON" | "EDITED" | "EDIT_OFF";
 
 const ToDoItem = memo(function ({
@@ -35,13 +24,12 @@ const ToDoItem = memo(function ({
 
 	function handleOnBlur(toDo: ToDo) {
 		if (inputRef.current) {
-			handleUpdate(toDo, inputRef.current.value);
+			handleUpdate({ toDo: toDo, newText: inputRef.current.value });
 			setEditMode("EDITED");
 		}
 	}
 
 	function handleToggleEdit() {
-		console.log("2");
 		if (editMode === "EDIT_OFF") {
 			setEditMode("EDIT_ON");
 		} else {
@@ -64,7 +52,7 @@ const ToDoItem = memo(function ({
 				<Input
 					type="checkbox"
 					className={"accent-blue-500"}
-					onChange={() => toggleStatus(toDo)}
+					onChange={() => toggleStatus({ toDo })}
 					value={toDo.status}
 					title="Mark as complete"
 					checked={toDo.status === "COMPLETED"}
@@ -80,7 +68,7 @@ const ToDoItem = memo(function ({
 					/>
 				) : (
 					<div
-						className={`${toDo.status === "COMPLETED" && "line-through text-gray-400"} text-base px-2 wrap-break-word max-w-full`}
+						className={`${toDo.status === "COMPLETED" && "line-through text-gray-500"} text-base px-2 wrap-break-word max-w-full`}
 					>
 						{toDo.title}
 					</div>
@@ -99,7 +87,7 @@ const ToDoItem = memo(function ({
 				)}
 				<Button
 					variant="DANGER"
-					onClick={() => handleDelete(toDo)}
+					onClick={() => handleDelete({ toDo })}
 					title="Delete task"
 					className="opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto"
 				>

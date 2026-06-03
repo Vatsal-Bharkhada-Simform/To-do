@@ -6,7 +6,7 @@ import type { ToDo } from "../types/to_do_type";
 export default function ToDoList() {
 	const { toDo, dispatch } = useContext(ToDoContext);
 
-	function toggleStatus(index: number, toDo: ToDo) {
+	function toggleStatus({ index, toDo }: { index: number; toDo: ToDo }) {
 		dispatch({
 			type: "UPDATE",
 			payload: {
@@ -17,7 +17,7 @@ export default function ToDoList() {
 		});
 	}
 
-	function handleDelete(index: number, toDo: ToDo) {
+	function handleDelete({ index, toDo }: { index: number; toDo: ToDo }) {
 		dispatch({
 			type: "DELETE",
 			payload: toDo,
@@ -25,7 +25,15 @@ export default function ToDoList() {
 		});
 	}
 
-	function handleUpdate(index: number, toDo: ToDo, newText: string) {
+	function handleUpdate({
+		index,
+		toDo,
+		newText,
+	}: {
+		index: number;
+		toDo: ToDo;
+		newText: string;
+	}) {
 		if (newText.trim() === toDo.title) return;
 		else {
 			dispatch({
@@ -46,9 +54,19 @@ export default function ToDoList() {
 					<ToDoItem
 						toDo={item}
 						key={item.id}
-						toggleStatus={toggleStatus.bind(null, index)}
-						handleDelete={handleDelete.bind(null, index)}
-						handleUpdate={handleUpdate.bind(null, index)}
+						toggleStatus={({ toDo }: { toDo: ToDo }) =>
+							toggleStatus({ index, toDo })
+						}
+						handleDelete={({ toDo }: { toDo: ToDo }) =>
+							handleDelete({ index, toDo })
+						}
+						handleUpdate={({
+							toDo,
+							newText,
+						}: {
+							toDo: ToDo;
+							newText: string;
+						}) => handleUpdate({ index, toDo, newText })}
 					/>
 				);
 			})}

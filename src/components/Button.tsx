@@ -1,4 +1,4 @@
-const primary = "px-4 text-white bg-blue-500 rounded-4xl hover:bg-blue-600";
+const primary = "px-4 text-white bg-blue-600/90 rounded-4xl hover:bg-blue-600";
 const secondary = "rounded-lg hover:bg-gray-200";
 const danger = "rounded-lg hover:bg-red-100 hover:text-red-600";
 
