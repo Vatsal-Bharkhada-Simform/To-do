@@ -1,9 +1,9 @@
 import { useContext, useState } from "react";
+import { ToDoContext } from "../context/ToDoContext";
+import type { FilterOptions } from "../types/to_do_type";
 import Input from "./Input";
 import Button from "./Button";
-import { ToDoContext } from "../context/ToDoContext";
 import Dropdown from "./Dropdown";
-import type { FilterOptions } from "../types/to_do_type";
 
 const filters: FilterOptions[] = ["All", "Completed", "Incomplete"];
 

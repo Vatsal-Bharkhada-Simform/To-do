@@ -1,8 +1,8 @@
 import { useEffect, useReducer, useState, type ReactElement } from "react";
-import { ToDoContext } from "./ToDoContext";
 import { todoReducer } from "../utils/todoReducer";
 import { fetchToDO } from "../utils/fetchToDo";
 import type { ToDo } from "../types/to_do_type";
+import { ToDoContext } from "./ToDoContext";
 
 export default function ToDoContextProvider({
 	children,

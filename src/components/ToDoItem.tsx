@@ -1,9 +1,9 @@
 import { memo, useEffect, useRef, useState } from "react";
 import type { ToDo } from "../types/to_do_type";
+import getFormattedDate from "../utils/formatDate";
 import Button from "./Button";
 import Icon from "./Icon";
 import Input from "./Input";
-import getFormattedDate from "../utils/formatDate";
 
 type ToDoItemProps = {
 	toDo: ToDo;
