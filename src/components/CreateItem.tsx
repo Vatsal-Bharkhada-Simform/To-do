@@ -58,6 +58,7 @@ export default function CreateItem() {
 						key={"TodoInput"}
 						onChange={handleInputChange}
 						name="to-do-input"
+						title="Task input"
 						className="rounded-4xl w-full"
 					/>
 					<Button variant="PRIMARY" type="submit">

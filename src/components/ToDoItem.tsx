@@ -66,6 +66,7 @@ const ToDoItem = memo(function ({
 					className={"accent-blue-500"}
 					onChange={() => toggleStatus(toDo)}
 					value={toDo.status}
+					title="Mark as complete"
 					checked={toDo.status === "COMPLETED"}
 				/>
 				{editMode === "EDIT_ON" ? (
@@ -74,6 +75,7 @@ const ToDoItem = memo(function ({
 						ref={inputRef}
 						defaultValue={toDo.title}
 						onBlur={() => handleOnBlur(toDo)}
+						title="Edit task content"
 						className="w-full max-w-full min-w-0 wrap-break-word"
 					/>
 				) : (
@@ -89,6 +91,7 @@ const ToDoItem = memo(function ({
 					<Button
 						variant="SECONDARY"
 						onClick={handleToggleEdit}
+						title="Edit task"
 						className="opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto"
 					>
 						<Icon id="edit" />
@@ -97,6 +100,7 @@ const ToDoItem = memo(function ({
 				<Button
 					variant="DANGER"
 					onClick={() => handleDelete(toDo)}
+					title="Delete task"
 					className="opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto"
 				>
 					<Icon id="trashBin" />
