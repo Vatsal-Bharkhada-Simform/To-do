@@ -27,7 +27,7 @@ export default function Dropdown({ ...props }: Dropdown) {
 			<div className="relative inline-block w-36">
 				<button
 					onClick={toggleOpen}
-					className="w-full border-none outline-none px-4 p-2 rounded-4xl text-gray-700 bg-gray-100"
+					className="w-full border-none cursor-pointer outline-none px-4 p-2 rounded-4xl text-gray-700 bg-gray-100"
 				>
 					<div className="flex gap-2 justify-between">
 						<span className="text-ellipsis">
@@ -45,7 +45,7 @@ export default function Dropdown({ ...props }: Dropdown) {
 							return (
 								<li key={String(option) + index}>
 									<button
-										className={`w-full flex gap-2 border-none outline-none px-4 py-2 rounded-lg ${props.value === option ? "bg-blue-100 text-blue-600" : "bg-transparent text-gray-700 hover:bg-blue-50 focus:bg-blue-50"}`}
+										className={`w-full flex gap-2 cursor-pointer border-none outline-none px-4 py-2 rounded-lg ${props.value === option ? "bg-blue-100 text-blue-600" : "bg-transparent text-gray-700 hover:bg-blue-50 focus:bg-blue-50"}`}
 										onClick={() => props.onChange(option)}
 										autoFocus={option === props.value}
 									>
