@@ -7,25 +7,28 @@ import Input from "./Input";
 
 type ToDoItemProps = {
 	toDo: ToDo;
-	toggleStatus: ({ toDo }: { toDo: ToDo }) => void;
-	handleDelete: ({ toDo }: { toDo: ToDo }) => void;
-	handleUpdate: ({ toDo, newText }: { toDo: ToDo; newText: string }) => void;
+	toggleStatus: (toDo: ToDo) => void;
+	handleDelete: (toDo: ToDo) => void;
+	handleUpdate: (toDo: ToDo) => void;
 };
 
 type EditFlags = "EDIT_ON" | "EDITED" | "EDIT_OFF";
 
 const ToDoItem = memo(function ({
 	toDo,
-	toggleStatus,
 	handleDelete,
 	handleUpdate,
+	toggleStatus,
 }: ToDoItemProps) {
 	const [editMode, setEditMode] = useState<EditFlags>("EDIT_OFF");
 	const inputRef = useRef<HTMLInputElement | null>(null);
 
 	function handleOnBlur(toDo: ToDo) {
-		if (inputRef.current) {
-			handleUpdate({ toDo: toDo, newText: inputRef.current.value });
+		if (inputRef.current && inputRef.current.value.trim() !== toDo.title) {
+			handleUpdate({
+				...toDo,
+				title: inputRef.current.value,
+			});
 			setEditMode("EDITED");
 		}
 	}
@@ -53,7 +56,7 @@ const ToDoItem = memo(function ({
 				<Input
 					type="checkbox"
 					className={"accent-blue-500"}
-					onChange={() => toggleStatus({ toDo })}
+					onChange={() => toggleStatus(toDo)}
 					value={toDo.status}
 					title="Mark as complete"
 					checked={toDo.status === "COMPLETED"}
@@ -88,7 +91,7 @@ const ToDoItem = memo(function ({
 				)}
 				<Button
 					variant="DANGER"
-					onClick={() => handleDelete({ toDo })}
+					onClick={() => handleDelete(toDo)}
 					title="Delete task"
 					className="opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto"
 				>

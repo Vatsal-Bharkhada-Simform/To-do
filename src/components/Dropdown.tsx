@@ -22,6 +22,11 @@ export default function Dropdown({ ...props }: Dropdown) {
 		setOpen((prev) => !prev);
 	}
 
+	function handleChange(option: string) {
+		props.onChange(option);
+		setOpen(false);
+	}
+
 	return (
 		<>
 			<div className="relative inline-block w-36">
@@ -46,7 +51,7 @@ export default function Dropdown({ ...props }: Dropdown) {
 								<li key={String(option) + index}>
 									<button
 										className={`w-full flex gap-2 cursor-pointer border-none outline-none px-4 py-2 rounded-lg ${props.value === option ? "bg-blue-100 text-blue-600" : "bg-transparent text-gray-700 hover:bg-blue-50 focus:bg-blue-50"}`}
-										onClick={() => props.onChange(option)}
+										onClick={() => handleChange(option)}
 										autoFocus={option === props.value}
 									>
 										<Icon

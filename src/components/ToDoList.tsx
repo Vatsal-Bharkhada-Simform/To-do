@@ -6,67 +6,40 @@ import ToDoItem from "./ToDoItem";
 export default function ToDoList() {
 	const { toDo, dispatch } = useContext(ToDoContext);
 
-	function toggleStatus({ index, toDo }: { index: number; toDo: ToDo }) {
+	function toggleStatus(toDo: ToDo) {
 		dispatch({
 			type: "UPDATE",
 			payload: {
 				...toDo,
 				status: toDo.status === "COMPLETED" ? "PENDING" : "COMPLETED",
 			},
-			index: index,
 		});
 	}
 
-	function handleDelete({ index, toDo }: { index: number; toDo: ToDo }) {
+	function handleDelete(toDo: ToDo) {
 		dispatch({
 			type: "DELETE",
 			payload: toDo,
-			index: index,
 		});
 	}
 
-	function handleUpdate({
-		index,
-		toDo,
-		newText,
-	}: {
-		index: number;
-		toDo: ToDo;
-		newText: string;
-	}) {
-		if (newText.trim() === toDo.title) return;
-		else {
-			dispatch({
-				type: "UPDATE",
-				payload: {
-					...toDo,
-					title: newText,
-				},
-				index: index,
-			});
-		}
+	function handleUpdate(toDo: ToDo) {
+		dispatch({
+			type: "UPDATE",
+			payload: toDo,
+		});
 	}
 
 	return (
 		<ul className="w-150 max-w-full flex flex-col gap-2 list-none pb-24">
-			{toDo.map((item, index) => {
+			{toDo.map((item) => {
 				return (
 					<ToDoItem
 						toDo={item}
 						key={item.id}
-						toggleStatus={({ toDo }: { toDo: ToDo }) =>
-							toggleStatus({ index, toDo })
-						}
-						handleDelete={({ toDo }: { toDo: ToDo }) =>
-							handleDelete({ index, toDo })
-						}
-						handleUpdate={({
-							toDo,
-							newText,
-						}: {
-							toDo: ToDo;
-							newText: string;
-						}) => handleUpdate({ index, toDo, newText })}
+						handleDelete={handleDelete}
+						handleUpdate={handleUpdate}
+						toggleStatus={toggleStatus}
 					/>
 				);
 			})}
