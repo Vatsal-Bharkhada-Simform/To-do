@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { ToDoContext } from "../context/ToDoContext";
 import type { FilterOptions } from "../types/to_do_type";
 import Input from "./Input";
@@ -8,14 +8,8 @@ import Dropdown from "./Dropdown";
 const filters: Array<FilterOptions> = ["All", "Completed", "Incomplete"];
 
 export default function CreateItem() {
-	const [task, setTask] = useState("");
-
 	const { dispatch, filterOptions, setFilterOptions } =
 		useContext(ToDoContext);
-
-	function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
-		setTask(e.target.value);
-	}
 
 	function handleFilterChange(newValue: string) {
 		setFilterOptions(newValue);
@@ -23,23 +17,28 @@ export default function CreateItem() {
 
 	function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
 		e.preventDefault();
+		
+        const formData = new FormData(e.currentTarget);
+		const task = formData.get("to-do-input");
 
-		if (task === "") {
+		if (typeof task !== "string") return;
+
+		if (task.trim() === "") {
 			alert("Cannot create empty task");
 			return;
 		}
 
-		setTask("");
-
 		dispatch({
 			type: "ADD",
 			payload: {
-				id: -1, // Placeholder id as reducer would dynamically provide id
+				id: "dummy_id", // Placeholder id as reducer would dynamically provide id
 				title: task,
 				status: "PENDING",
 				createdAt: new Date(),
 			},
 		});
+
+		e.currentTarget.reset();
 	}
 
 	return (
@@ -54,9 +53,8 @@ export default function CreateItem() {
 				>
 					<Input
 						placeholder={"Add task"}
-						value={task}
+						defaultValue={""}
 						key={"TodoInput"}
-						onChange={handleInputChange}
 						name="to-do-input"
 						title="Task input"
 						className="rounded-4xl w-full"
