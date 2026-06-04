@@ -1,6 +1,9 @@
 import type { ReducerAction, ToDo } from "../types/to_do_type";
 
-export function todoReducer(prevState: Array<ToDo>, action: ReducerAction): Array<ToDo> {
+export function todoReducer(
+	prevState: Array<ToDo>,
+	action: ReducerAction
+): Array<ToDo> {
 	if (expired()) return [];
 	switch (action.type) {
 		case "ADD":
@@ -8,24 +11,20 @@ export function todoReducer(prevState: Array<ToDo>, action: ReducerAction): Arra
 				...prevState,
 				{
 					...action.payload,
-					id: (prevState.at(-1)?.id ?? 0) + 1,
+					id: crypto.randomUUID(),
 				},
 			];
 
 		case "UPDATE":
-			if (action.index === undefined)
-				throw new Error("Invalid reducer update call");
-			return [
-				...prevState.slice(0, action.index),
-				action.payload,
-				...prevState.slice(action.index + 1),
-			];
+			return prevState.map((todo) => {
+				if (todo.id === action.payload.id) {
+					return action.payload;
+				}
+				return todo;
+			});
 
 		case "DELETE":
-			return prevState.filter(
-				(item, index) =>
-					item.id !== action.payload.id && index !== action.index
-			);
+			return prevState.filter((item) => item.id !== action.payload.id);
 
 		default:
 			throw new Error("Invalid reducer action passed");

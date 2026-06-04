@@ -2,7 +2,7 @@ import type { Dispatch, SetStateAction } from "react";
 
 type ToDo = {
 	title: string;
-	id: number;
+	id: string;
 	status: "PENDING" | "COMPLETED";
 	createdAt: Date;
 };
@@ -19,7 +19,6 @@ type ToDoContextType = {
 type ReducerAction = {
 	type: "ADD" | "UPDATE" | "DELETE";
 	payload: ToDo;
-	index?: number;
 };
 
 export type { ToDo, ToDoContextType, ReducerAction, FilterOptions };

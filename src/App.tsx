@@ -3,11 +3,9 @@ import Content from "./layout/Content";
 
 function App() {
 	return (
-		<>
-			<ToDoContextProvider>
-				<Content />
-			</ToDoContextProvider>
-		</>
+		<ToDoContextProvider>
+			<Content />
+		</ToDoContextProvider>
 	);
 }
 
