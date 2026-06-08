@@ -25,14 +25,15 @@ const ToDoItem = memo(function ({
 	const inputRef = useRef<HTMLInputElement | null>(null);
 
 	function handleOnBlur(toDo: ToDo) {
-		if (!isValidToDo(inputRef.current.value)) {
+        const value = inputRef.current.value.trim();
+		if (!isValidToDo(value)) {
 			alert("Please enter a valid input");
 			return;
 		}
-		if (inputRef.current && inputRef.current.value.trim() !== toDo.title) {
+		if (value && value !== toDo.title) {
 			handleUpdate({
 				...toDo,
-				title: inputRef.current.value,
+				title: value,
 			});
 			setEditMode("EDITED");
 		}

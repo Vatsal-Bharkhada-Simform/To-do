@@ -33,7 +33,7 @@ export default function CreateItem() {
 			type: "ADD",
 			payload: {
 				id: "dummy_id", // Placeholder id as reducer would dynamically provide id
-				title: task,
+				title: task.trim(),
 				status: "PENDING",
 				createdAt: new Date(),
 			},
