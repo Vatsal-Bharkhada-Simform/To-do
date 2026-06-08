@@ -25,7 +25,7 @@ const ToDoItem = memo(function ({
 	const inputRef = useRef<HTMLInputElement | null>(null);
 
 	function handleOnBlur(toDo: ToDo) {
-        const value = inputRef.current.value.trim();
+		const value = inputRef.current.value.trim();
 		if (!isValidToDo(value)) {
 			alert("Please enter a valid input");
 			return;

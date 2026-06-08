@@ -24,8 +24,8 @@ export function todoReducer(
 
 		case "DELETE":
 			return prevState.filter((item) => item.id !== action.payload.id);
-		
-        case "CLEAR":
+
+		case "CLEAR":
 			return [];
 
 		default:
