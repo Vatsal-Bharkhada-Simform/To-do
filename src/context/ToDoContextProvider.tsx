@@ -1,7 +1,13 @@
-import { useEffect, useReducer, useState, type ReactElement } from "react";
+import {
+	useEffect,
+	useMemo,
+	useReducer,
+	useState,
+	type ReactElement,
+} from "react";
 import { todoReducer } from "../utils/todoReducer";
 import { fetchToDO } from "../utils/fetchToDo";
-import type { ToDo } from "../types/to_do_type";
+import type { FilterOptions, ToDo } from "../types/to_do_type";
 import { ToDoContext } from "./ToDoContext";
 
 export default function ToDoContextProvider({
@@ -10,16 +16,16 @@ export default function ToDoContextProvider({
 	children: ReactElement;
 }) {
 	const [toDo, dispatch] = useReducer(todoReducer, undefined, fetchToDO);
-	const [filterOptions, setFilterOptions] = useState("All");
+	const [filterOptions, setFilterOptions] = useState<FilterOptions>("All");
 
 	useEffect(() => {
-        if(toDo.length === 0) return;
+		if (toDo.length === 0) return;
 		if (expired()) {
 			dispatch({
 				payload: toDo[0],
 				type: "CLEAR",
 			});
-            localStorage.setItem(
+			localStorage.setItem(
 				"TO_DO_ITEMS",
 				JSON.stringify({
 					date: new Date().toISOString().split("T")[0],
@@ -46,12 +52,14 @@ export default function ToDoContextProvider({
 		toDos = toDo;
 	}
 
-	const ctxValue = {
-		toDo: toDos,
-		filterOptions: filterOptions,
-		setFilterOptions: setFilterOptions,
-		dispatch: dispatch,
-	};
+	const ctxValue = useMemo(() => {
+		return {
+			toDo: toDos,
+			filterOptions: filterOptions,
+			setFilterOptions: setFilterOptions,
+			dispatch: dispatch,
+		};
+	}, [toDos, filterOptions]);
 
 	return (
 		<>
