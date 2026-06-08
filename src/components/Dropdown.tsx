@@ -27,9 +27,14 @@ export default function Dropdown({ ...props }: Dropdown) {
 		setOpen(false);
 	}
 
+    function handleBlur(e: React.FocusEvent){
+        if(e.currentTarget.contains(e.relatedTarget as Node)) return;
+        setOpen(false);
+    }
+
 	return (
 		<>
-			<div className="relative inline-block w-36">
+			<div className="relative inline-block w-36" onBlur={handleBlur}>
 				<button
 					onClick={toggleOpen}
 					className="w-full border-none cursor-pointer outline-none px-4 p-2 rounded-4xl text-gray-700 bg-gray-100"
