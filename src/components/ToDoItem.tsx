@@ -4,6 +4,7 @@ import getFormattedDate from "../utils/formatDate";
 import Button from "./Button";
 import Icon from "./Icon";
 import Input from "./Input";
+import isValidToDo from "../utils/validateInput";
 
 type ToDoItemProps = {
 	toDo: ToDo;
@@ -24,6 +25,10 @@ const ToDoItem = memo(function ({
 	const inputRef = useRef<HTMLInputElement | null>(null);
 
 	function handleOnBlur(toDo: ToDo) {
+		if (!isValidToDo(inputRef.current.value)) {
+			alert("Please enter a valid input");
+			return;
+		}
 		if (inputRef.current && inputRef.current.value.trim() !== toDo.title) {
 			handleUpdate({
 				...toDo,
@@ -49,7 +54,7 @@ const ToDoItem = memo(function ({
 
 	return (
 		<li className="relative px-4 py-2 rounded-2xl flex justify-between items-center hover:bg-gray-50 cursor-pointer overflow-visible group">
-			<span className="absolute right-full mr-4 top-1/2 -translate-y-1/2 z-20 whitespace-nowrap text-gray-400 opacity-0 group-hover:opacity-100 transition-all">
+			<span className="absolute right-full mr-4 top-1/2 -translate-y-1/2 z-20 whitespace-nowrap text-gray-400 transition-all">
 				{getFormattedDate(toDo.createdAt)}
 			</span>
 			<div className="flex flex-1 items-center gap-2 overflow-x-hidden">
@@ -68,7 +73,7 @@ const ToDoItem = memo(function ({
 						defaultValue={toDo.title}
 						onBlur={() => handleOnBlur(toDo)}
 						title="Edit task content"
-						className="w-full max-w-full min-w-0 wrap-break-word"
+						className="w-full max-w-full min-w-0 wrap-break-word rounded-4xl bg-orange-100 px-4"
 					/>
 				) : (
 					<div

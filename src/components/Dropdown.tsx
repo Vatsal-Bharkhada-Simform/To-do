@@ -27,10 +27,10 @@ export default function Dropdown({ ...props }: Dropdown) {
 		setOpen(false);
 	}
 
-    function handleBlur(e: React.FocusEvent){
-        if(e.currentTarget.contains(e.relatedTarget as Node)) return;
-        setOpen(false);
-    }
+	function handleBlur(e: React.FocusEvent) {
+		if (e.currentTarget.contains(e.relatedTarget as Node)) return;
+		setOpen(false);
+	}
 
 	return (
 		<>

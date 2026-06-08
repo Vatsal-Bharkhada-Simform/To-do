@@ -4,6 +4,7 @@ import type { FilterOptions } from "../types/to_do_type";
 import Input from "./Input";
 import Button from "./Button";
 import Dropdown from "./Dropdown";
+import isValidToDo from "../utils/validateInput";
 
 const filters: Array<FilterOptions> = ["All", "Completed", "Incomplete"];
 
@@ -17,14 +18,14 @@ export default function CreateItem() {
 
 	function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
 		e.preventDefault();
-		
-        const formData = new FormData(e.currentTarget);
+
+		const formData = new FormData(e.currentTarget);
 		const task = formData.get("to-do-input");
 
 		if (typeof task !== "string") return;
 
-		if (task.trim() === "") {
-			alert("Cannot create empty task");
+		if (!isValidToDo(task)) {
+			alert("Please enter a valid input");
 			return;
 		}
 
