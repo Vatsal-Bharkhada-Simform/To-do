@@ -30,19 +30,31 @@ export default function ToDoList() {
 		});
 	}
 
+    function populateToDoItems(){
+        if(toDo.length === 0) {
+            return (
+                <div className="w-full p-8 text-center text-gray-500 bg-gray-100 rounded-2xl font-semibold">
+                    Nothing to show
+                </div>
+            )
+        }
+
+        return toDo.map((item) => {
+			return (
+				<ToDoItem
+					toDo={item}
+					key={item.id}
+					handleDelete={handleDelete}
+					handleUpdate={handleUpdate}
+					toggleStatus={toggleStatus}
+				/>
+			);
+		});
+    }
+
 	return (
 		<ul className="w-150 max-w-full flex flex-col gap-2 list-none pb-24">
-			{toDo.map((item) => {
-				return (
-					<ToDoItem
-						toDo={item}
-						key={item.id}
-						handleDelete={handleDelete}
-						handleUpdate={handleUpdate}
-						toggleStatus={toggleStatus}
-					/>
-				);
-			})}
+			{populateToDoItems()}
 		</ul>
 	);
 }
