@@ -36,8 +36,8 @@ const ToDoItem = memo(function ({
 				...toDo,
 				title: value,
 			});
-			setEditMode("EDITED");
 		}
+        setEditMode("EDITED");
 	}
 
 	function handleToggleEdit() {
