@@ -71,7 +71,7 @@ export default function ToDoContextProvider({
 }
 
 function expired() {
-	const date = JSON.parse(localStorage.getItem("TO_DO_ITEMS"))?.date;
+	const date = JSON.parse(localStorage.getItem("TO_DO_ITEMS") || "{}")?.date;
 	if (!date) return false;
 	return date !== new Date().toISOString().split("T")[0];
 }

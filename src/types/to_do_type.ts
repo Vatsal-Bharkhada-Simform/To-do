@@ -12,7 +12,7 @@ type FilterOptions = "All" | "Completed" | "Incomplete";
 type ToDoContextType = {
 	toDo: Array<ToDo>;
 	filterOptions: FilterOptions;
-	setFilterOptions: Dispatch<SetStateAction<string>>;
+	setFilterOptions: Dispatch<SetStateAction<FilterOptions>>;
 	dispatch: React.ActionDispatch<[action: ReducerAction]>;
 };
 

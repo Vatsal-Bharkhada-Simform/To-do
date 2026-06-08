@@ -15,7 +15,7 @@ export default function CreateItem() {
 		useContext(ToDoContext);
 
 	function handleFilterChange(newValue: string) {
-		setFilterOptions(newValue);
+		setFilterOptions(newValue as FilterOptions);
 	}
     
 	function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
