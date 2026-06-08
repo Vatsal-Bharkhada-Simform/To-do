@@ -13,6 +13,21 @@ export default function ToDoContextProvider({
 	const [filterOptions, setFilterOptions] = useState("All");
 
 	useEffect(() => {
+        if(toDo.length === 0) return;
+		if (expired()) {
+			dispatch({
+				payload: toDo[0],
+				type: "CLEAR",
+			});
+            localStorage.setItem(
+				"TO_DO_ITEMS",
+				JSON.stringify({
+					date: new Date().toISOString().split("T")[0],
+					toDo: [],
+				})
+			);
+			return;
+		}
 		localStorage.setItem(
 			"TO_DO_ITEMS",
 			JSON.stringify({
@@ -45,4 +60,10 @@ export default function ToDoContextProvider({
 			</ToDoContext.Provider>
 		</>
 	);
+}
+
+function expired() {
+	const date = JSON.parse(localStorage.getItem("TO_DO_ITEMS"))?.date;
+	if (!date) return false;
+	return date !== new Date().toISOString().split("T")[0];
 }

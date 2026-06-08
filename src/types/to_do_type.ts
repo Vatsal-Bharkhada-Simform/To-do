@@ -17,7 +17,7 @@ type ToDoContextType = {
 };
 
 type ReducerAction = {
-	type: "ADD" | "UPDATE" | "DELETE";
+	type: "ADD" | "UPDATE" | "DELETE" | "CLEAR";
 	payload: ToDo;
 };
 

@@ -4,7 +4,6 @@ export function todoReducer(
 	prevState: Array<ToDo>,
 	action: ReducerAction
 ): Array<ToDo> {
-	if (expired()) return [];
 	switch (action.type) {
 		case "ADD":
 			return [
@@ -25,15 +24,11 @@ export function todoReducer(
 
 		case "DELETE":
 			return prevState.filter((item) => item.id !== action.payload.id);
+		
+        case "CLEAR":
+			return [];
 
 		default:
 			throw new Error("Invalid reducer action passed");
 	}
-}
-
-function expired() {
-	return (
-		JSON.parse(localStorage.getItem("TO_DO_ITEMS") ?? "")?.date !==
-		new Date().toISOString().split("T")[0]
-	);
 }
