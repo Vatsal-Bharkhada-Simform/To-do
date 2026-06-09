@@ -1,0 +1,10 @@
+@import "tailwindcss";
+
+@theme {
+	--shadow-dropdown: 0px 5px 15px 0px #00000020;
+}
+
+body {
+	font-family: "DM Sans", Arial, Helvetica, sans-serif;
+	color: #333;
+}
