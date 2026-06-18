@@ -5,6 +5,9 @@ import isValidToDo from "../utils/validateInput";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Tabs, TabsList, TabsTrigger } from "./ui/tabs";
+import { Switch } from "./ui/switch";
+import { Label } from "./ui/label";
+import { useTheme } from "@/context/useTheme";
 
 const filters: Array<FilterOptions> = ["All", "Completed", "Incomplete"];
 
@@ -13,6 +16,7 @@ export default function CreateItem() {
 
 	const { dispatch, filterOptions, setFilterOptions } =
 		useContext(ToDoContext);
+	const { theme, toggleTheme } = useTheme();
 
 	function handleFilterChange(newValue: string) {
 		setFilterOptions(newValue as FilterOptions);
@@ -46,9 +50,19 @@ export default function CreateItem() {
 	}
 
 	return (
-		<div className="w-150 max-w-full flex flex-col gap-4 sticky top-0 bg-white z-20 pt-20">
-			<header className="mb-3">
-				<h1 className="text-4xl font-extrabold">Your Todo</h1>
+		<div className="w-150 max-w-full flex flex-col gap-4 sticky top-0 z-20 pt-20">
+			<header className="flex gap-2 mb-3">
+				<div className="flex-1">
+					<h1 className="text-4xl font-extrabold">Your Todo</h1>
+				</div>
+				<div className="flex items-center space-x-2">
+					<Switch
+						id="theme-toggle"
+						checked={theme === "DARK"}
+						onCheckedChange={toggleTheme}
+					/>
+					<Label htmlFor="theme-toggle">Toggle theme</Label>
+				</div>
 			</header>
 			<div className="flex flex-col gap-4">
 				<form
@@ -73,15 +87,23 @@ export default function CreateItem() {
 					</Button>
 				</form>
 				<div className="w-full">
-					<Tabs className="w-100" value={filterOptions} onValueChange={handleFilterChange}>
+					<Tabs
+						className="w-100"
+						value={filterOptions}
+						onValueChange={handleFilterChange}
+					>
 						<TabsList>
-                            {
-                                filters.map(filter => {
-                                    return (
-                                        <TabsTrigger className="p-3" value={filter} key={filter}>{filter}</TabsTrigger>
-                                    )
-                                })
-                            }
+							{filters.map((filter) => {
+								return (
+									<TabsTrigger
+										className="p-3"
+										value={filter}
+										key={filter}
+									>
+										{filter}
+									</TabsTrigger>
+								);
+							})}
 						</TabsList>
 					</Tabs>
 				</div>

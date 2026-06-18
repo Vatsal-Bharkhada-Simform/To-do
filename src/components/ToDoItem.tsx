@@ -6,6 +6,7 @@ import Icon from "./Icon";
 import { Input } from "./ui/input";
 import isValidToDo from "../utils/validateInput";
 import { Checkbox } from "./ui/checkbox";
+import { useTheme } from "@/context/useTheme";
 
 type ToDoItemProps = {
 	toDo: ToDo;
@@ -21,6 +22,8 @@ const ToDoItem = memo(function ({
 	toggleStatus,
 }: ToDoItemProps) {
 	const [editMode, setEditMode] = useState(false);
+    const {theme} = useTheme();
+    
 	const inputRef = useRef<HTMLInputElement | null>(null);
 
 	function handleToggleEdit() {
@@ -50,7 +53,9 @@ const ToDoItem = memo(function ({
 	}, [editMode]);
 
 	return (
-		<li className="relative px-4 py-2 rounded-2xl flex justify-between items-center bg-gray-50 border border-gray-200 cursor-pointer overflow-visible group">
+		<li
+			className={`relative px-4 py-2 rounded-2xl flex justify-between items-center border  cursor-pointer overflow-visible group ${theme === "LIGHT" ? "bg-gray-100 border-gray-200" : "bg-neutral-800 border-neutral-600"}`}
+		>
 			<span className="absolute right-full mr-4 top-1/2 -translate-y-1/2 z-20 whitespace-nowrap text-gray-400 transition-all">
 				{getFormattedDate(toDo.createdAt)}
 			</span>
