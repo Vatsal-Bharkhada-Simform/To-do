@@ -1,26 +1,26 @@
 import { useContext, useState } from "react";
 import { ToDoContext } from "../context/ToDoContext";
 import type { FilterOptions } from "../types/to_do_type";
-import Input from "./Input";
-import Button from "./Button";
-import Dropdown from "./Dropdown";
 import isValidToDo from "../utils/validateInput";
+import { Button } from "./ui/button";
+import { Input } from "./ui/input";
+import { Tabs, TabsList, TabsTrigger } from "./ui/tabs";
 
 const filters: Array<FilterOptions> = ["All", "Completed", "Incomplete"];
 
 export default function CreateItem() {
-    const [error, setError] = useState("");
-    
+	const [error, setError] = useState("");
+
 	const { dispatch, filterOptions, setFilterOptions } =
 		useContext(ToDoContext);
 
 	function handleFilterChange(newValue: string) {
 		setFilterOptions(newValue as FilterOptions);
 	}
-    
+
 	function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
-        e.preventDefault();
-        setError("");
+		e.preventDefault();
+		setError("");
 
 		const formData = new FormData(e.currentTarget);
 		const task = formData.get("to-do-input");
@@ -28,7 +28,7 @@ export default function CreateItem() {
 		if (typeof task !== "string") return;
 
 		if (!isValidToDo(task)) {
-            setError("Please enter a valid input");
+			setError("Please enter a valid input");
 			return;
 		}
 
@@ -53,7 +53,7 @@ export default function CreateItem() {
 			<div className="flex flex-col gap-4">
 				<form
 					onSubmit={handleSubmit}
-					className={`relative p-2 rounded-4xl flex flex-row gap-2 bg-gray-100 border-2 border-white ${error !== "" && "border-red-400!"}`}
+					className="relative flex flex-row gap-2"
 				>
 					{error !== "" && (
 						<p className="absolute bottom-full left-0 text-red-500">
@@ -66,19 +66,24 @@ export default function CreateItem() {
 						key={"TodoInput"}
 						name="to-do-input"
 						title="Task input"
-						className="rounded-4xl w-full"
-                        onChange={() => setError("")}
+						onChange={() => setError("")}
 					/>
-					<Button variant="PRIMARY" type="submit">
+					<Button type="submit" className="cursor-pointer">
 						Add task
 					</Button>
 				</form>
 				<div className="w-full">
-					<Dropdown
-						options={filters}
-						value={filterOptions}
-						onChange={handleFilterChange}
-					/>
+					<Tabs className="w-100" value={filterOptions} onValueChange={handleFilterChange}>
+						<TabsList>
+                            {
+                                filters.map(filter => {
+                                    return (
+                                        <TabsTrigger className="p-3" value={filter} key={filter}>{filter}</TabsTrigger>
+                                    )
+                                })
+                            }
+						</TabsList>
+					</Tabs>
 				</div>
 			</div>
 		</div>
