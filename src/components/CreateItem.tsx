@@ -50,63 +50,67 @@ export default function CreateItem() {
 	}
 
 	return (
-		<div className={`w-150 max-w-full flex flex-col gap-4 sticky top-0 z-20 pt-20 ${theme==="LIGHT" ? "bg-white" : "bg-neutral-900"}`}>
-			<header className="flex gap-2 mb-3">
-				<div className="flex-1">
-					<h1 className="text-4xl font-extrabold">Your Todo</h1>
-				</div>
-				<div className="flex items-center space-x-2">
-					<Switch
-						id="theme-toggle"
-						checked={theme === "DARK"}
-						onCheckedChange={toggleTheme}
-					/>
-					<Label htmlFor="theme-toggle">Toggle theme</Label>
-				</div>
-			</header>
-			<div className="flex flex-col gap-4">
-				<form
-					onSubmit={handleSubmit}
-					className="relative flex flex-row gap-2"
-				>
-					{error !== "" && (
-						<p className="absolute bottom-full left-0 text-red-500">
-							{error}
-						</p>
-					)}
-					<Input
-						placeholder={"Add task"}
-						defaultValue={""}
-						key={"TodoInput"}
-						name="to-do-input"
-						title="Task input"
-						onChange={() => setError("")}
-                        maxLength={40}
-					/>
-					<Button type="submit" className="cursor-pointer">
-						Add task
-					</Button>
-				</form>
-				<div className="w-full">
-					<Tabs
-						className="w-100"
-						value={filterOptions}
-						onValueChange={handleFilterChange}
+		<div
+			className={`w-screen flex justify-center sticky top-0 z-20 pt-20 pb-6 ${theme === "LIGHT" ? "bg-white" : "bg-neutral-900"}`}
+		>
+			<div className="w-150 flex flex-col gap-4">
+				<header className="flex gap-2 mb-3">
+					<div className="flex-1">
+						<h1 className="text-4xl font-extrabold">Your Todo</h1>
+					</div>
+					<div className="flex items-center space-x-2">
+						<Switch
+							id="theme-toggle"
+							checked={theme === "DARK"}
+							onCheckedChange={toggleTheme}
+						/>
+						<Label htmlFor="theme-toggle">Toggle theme</Label>
+					</div>
+				</header>
+				<div className="flex flex-col gap-4">
+					<form
+						onSubmit={handleSubmit}
+						className="relative flex flex-row gap-2"
 					>
-						<TabsList>
-							{filters.map((filter) => {
-								return (
-									<TabsTrigger
-										className="p-3"
-										value={filter}
-										key={filter}
-									>
-										{filter}
-									</TabsTrigger>
-								);
-							})}
-						</TabsList>
-					</Tabs>
+						{error !== "" && (
+							<p className="absolute bottom-full left-0 text-red-500">
+								{error}
+							</p>
+						)}
+						<Input
+							placeholder={"Add task"}
+							defaultValue={""}
+							key={"TodoInput"}
+							name="to-do-input"
+							title="Task input"
+							onChange={() => setError("")}
+							maxLength={40}
+						/>
+						<Button type="submit" className="cursor-pointer">
+							Add task
+						</Button>
+					</form>
+					<div className="w-full">
+						<Tabs
+							className="w-100"
+							value={filterOptions}
+							onValueChange={handleFilterChange}
+						>
+							<TabsList>
+								{filters.map((filter) => {
+									return (
+										<TabsTrigger
+											className="p-3"
+											value={filter}
+											key={filter}
+										>
+											{filter}
+										</TabsTrigger>
+									);
+								})}
+							</TabsList>
+						</Tabs>
+					</div>
 				</div>
 			</div>
 		</div>

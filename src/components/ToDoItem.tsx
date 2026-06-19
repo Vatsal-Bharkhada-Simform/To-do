@@ -56,7 +56,7 @@ const ToDoItem = memo(function ({
 		<li
 			className={`relative px-4 py-2 rounded-2xl flex justify-between items-center border  cursor-pointer overflow-visible group ${theme === "LIGHT" ? "bg-gray-100 border-gray-200" : "bg-neutral-800 border-neutral-600"}`}
 		>
-			<span className="absolute right-full mr-4 top-1/2 -translate-y-1/2 z-20 whitespace-nowrap text-gray-400 transition-all">
+			<span className="absolute right-full mr-4 top-1/2 -translate-y-1/2 z-10 whitespace-nowrap text-neutral-400 transition-all">
 				{getFormattedDate(toDo.createdAt)}
 			</span>
 			<div className="flex flex-1 items-center gap-2 overflow-x-hidden p-2">
@@ -77,7 +77,7 @@ const ToDoItem = memo(function ({
 					/>
 				) : (
 					<div
-						className={`${toDo.status === "COMPLETED" && "line-through text-gray-500"} text-base px-2 py-1 wrap-break-word max-w-full`}
+						className={`${toDo.status === "COMPLETED" && "line-through text-neutral-500"} text-base px-2 py-1 wrap-break-word max-w-full`}
 					>
 						{toDo.title}
 					</div>
