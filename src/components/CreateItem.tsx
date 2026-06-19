@@ -50,7 +50,7 @@ export default function CreateItem() {
 	}
 
 	return (
-		<div className="w-150 max-w-full flex flex-col gap-4 sticky top-0 z-20 pt-20">
+		<div className={`w-150 max-w-full flex flex-col gap-4 sticky top-0 z-20 pt-20 ${theme==="LIGHT" ? "bg-white" : "bg-neutral-900"}`}>
 			<header className="flex gap-2 mb-3">
 				<div className="flex-1">
 					<h1 className="text-4xl font-extrabold">Your Todo</h1>
@@ -81,6 +81,7 @@ export default function CreateItem() {
 						name="to-do-input"
 						title="Task input"
 						onChange={() => setError("")}
+                        maxLength={40}
 					/>
 					<Button type="submit" className="cursor-pointer">
 						Add task
