@@ -1,26 +1,30 @@
 import { useContext, useState } from "react";
 import { ToDoContext } from "../context/ToDoContext";
 import type { FilterOptions } from "../types/to_do_type";
-import Input from "./Input";
-import Button from "./Button";
-import Dropdown from "./Dropdown";
 import isValidToDo from "../utils/validateInput";
+import { Button } from "./ui/button";
+import { Input } from "./ui/input";
+import { Tabs, TabsList, TabsTrigger } from "./ui/tabs";
+import { Switch } from "./ui/switch";
+import { Label } from "./ui/label";
+import { useTheme } from "@/context/useTheme";
 
 const filters: Array<FilterOptions> = ["All", "Completed", "Incomplete"];
 
 export default function CreateItem() {
-    const [error, setError] = useState("");
-    
+	const [error, setError] = useState("");
+
 	const { dispatch, filterOptions, setFilterOptions } =
 		useContext(ToDoContext);
+	const { theme, toggleTheme } = useTheme();
 
 	function handleFilterChange(newValue: string) {
 		setFilterOptions(newValue as FilterOptions);
 	}
-    
+
 	function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
-        e.preventDefault();
-        setError("");
+		e.preventDefault();
+		setError("");
 
 		const formData = new FormData(e.currentTarget);
 		const task = formData.get("to-do-input");
@@ -28,7 +32,7 @@ export default function CreateItem() {
 		if (typeof task !== "string") return;
 
 		if (!isValidToDo(task)) {
-            setError("Please enter a valid input");
+			setError("Please enter a valid input");
 			return;
 		}
 
@@ -46,39 +50,67 @@ export default function CreateItem() {
 	}
 
 	return (
-		<div className="w-150 max-w-full flex flex-col gap-4 sticky top-0 bg-white z-20 pt-20">
-			<header className="mb-3">
-				<h1 className="text-4xl font-extrabold">Your Todo</h1>
-			</header>
-			<div className="flex flex-col gap-4">
-				<form
-					onSubmit={handleSubmit}
-					className={`relative p-2 rounded-4xl flex flex-row gap-2 bg-gray-100 border-2 border-white ${error !== "" && "border-red-400!"}`}
-				>
-					{error !== "" && (
-						<p className="absolute bottom-full left-0 text-red-500">
-							{error}
-						</p>
-					)}
-					<Input
-						placeholder={"Add task"}
-						defaultValue={""}
-						key={"TodoInput"}
-						name="to-do-input"
-						title="Task input"
-						className="rounded-4xl w-full"
-                        onChange={() => setError("")}
-					/>
-					<Button variant="PRIMARY" type="submit">
-						Add task
-					</Button>
-				</form>
-				<div className="w-full">
-					<Dropdown
-						options={filters}
-						value={filterOptions}
-						onChange={handleFilterChange}
-					/>
+		<div
+			className={`w-screen flex justify-center sticky top-0 z-20 pt-20 pb-6 ${theme === "LIGHT" ? "bg-white" : "bg-neutral-900"}`}
+		>
+			<div className="w-150 flex flex-col gap-4">
+				<header className="flex gap-2 mb-3">
+					<div className="flex-1">
+						<h1 className="text-4xl font-extrabold">Your Todo</h1>
+					</div>
+					<div className="flex items-center space-x-2">
+						<Switch
+							id="theme-toggle"
+							checked={theme === "DARK"}
+							onCheckedChange={toggleTheme}
+						/>
+						<Label htmlFor="theme-toggle">Toggle theme</Label>
+					</div>
+				</header>
+				<div className="flex flex-col gap-4">
+					<form
+						onSubmit={handleSubmit}
+						className="relative flex flex-row gap-2"
+					>
+						{error !== "" && (
+							<p className="absolute bottom-full left-0 text-red-500">
+								{error}
+							</p>
+						)}
+						<Input
+							placeholder={"Add task"}
+							defaultValue={""}
+							key={"TodoInput"}
+							name="to-do-input"
+							title="Task input"
+							onChange={() => setError("")}
+							maxLength={40}
+						/>
+						<Button type="submit" className="cursor-pointer">
+							Add task
+						</Button>
+					</form>
+					<div className="w-full">
+						<Tabs
+							className="w-100"
+							value={filterOptions}
+							onValueChange={handleFilterChange}
+						>
+							<TabsList>
+								{filters.map((filter) => {
+									return (
+										<TabsTrigger
+											className="p-3"
+											value={filter}
+											key={filter}
+										>
+											{filter}
+										</TabsTrigger>
+									);
+								})}
+							</TabsList>
+						</Tabs>
+					</div>
 				</div>
 			</div>
 		</div>

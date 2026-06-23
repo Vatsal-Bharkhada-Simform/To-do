@@ -1,10 +1,12 @@
 import { memo, useEffect, useRef, useState } from "react";
 import type { ToDo } from "../types/to_do_type";
 import getFormattedDate from "../utils/formatDate";
-import Button from "./Button";
+import { Button } from "./ui/button";
 import Icon from "./Icon";
-import Input from "./Input";
+import { Input } from "./ui/input";
 import isValidToDo from "../utils/validateInput";
+import { Checkbox } from "./ui/checkbox";
+import { useTheme } from "@/context/useTheme";
 
 type ToDoItemProps = {
 	toDo: ToDo;
@@ -13,20 +15,21 @@ type ToDoItemProps = {
 	handleUpdate: (toDo: ToDo) => void;
 };
 
-type EditFlags = "EDIT_ON" | "EDITED" | "EDIT_OFF";
-
 const ToDoItem = memo(function ({
 	toDo,
 	handleDelete,
 	handleUpdate,
 	toggleStatus,
 }: ToDoItemProps) {
-	const [editMode, setEditMode] = useState<EditFlags>("EDIT_OFF");
+	const [editMode, setEditMode] = useState(false);
+    const {theme} = useTheme();
+    
 	const inputRef = useRef<HTMLInputElement | null>(null);
+	const isClickingSaveRef = useRef(false);
 
-	function handleOnBlur(toDo: ToDo) {
-        if(!inputRef.current) return;
-		const value = inputRef.current?.value.trim();
+	function handleSave() {
+		if (!inputRef.current) return;
+		const value = inputRef.current.value.trim();
 		if (!isValidToDo(value)) {
 			alert("Please enter a valid input");
 			return;
@@ -37,70 +40,85 @@ const ToDoItem = memo(function ({
 				title: value,
 			});
 		}
-        setEditMode("EDITED");
+		setEditMode(false);
 	}
 
 	function handleToggleEdit() {
-		if (editMode === "EDIT_OFF") {
-			setEditMode("EDIT_ON");
+		if (!editMode) {
+			setEditMode(true);
 		} else {
-			setEditMode("EDIT_OFF");
+			handleSave();
 		}
 	}
 
+	function handleBlur() {
+		if (isClickingSaveRef.current) {
+			isClickingSaveRef.current = false;
+			return;
+		}
+		handleSave();
+	}
+
 	useEffect(() => {
-		if (inputRef.current && editMode === "EDIT_ON") {
+		if (inputRef.current && editMode) {
 			inputRef.current.focus();
 		}
 	}, [editMode]);
 
 	return (
-		<li className="relative px-4 py-2 rounded-2xl flex justify-between items-center hover:bg-gray-50 cursor-pointer overflow-visible group">
-			<span className="absolute right-full mr-4 top-1/2 -translate-y-1/2 z-20 whitespace-nowrap text-gray-400 transition-all">
+		<li
+			className={`relative px-4 py-2 rounded-2xl flex justify-between items-center border  cursor-pointer overflow-visible group ${theme === "LIGHT" ? "bg-gray-100 border-gray-200" : "bg-neutral-800 border-neutral-600"}`}
+		>
+			<span className="absolute right-full mr-4 top-1/2 -translate-y-1/2 z-10 whitespace-nowrap text-neutral-400 transition-all">
 				{getFormattedDate(toDo.createdAt)}
 			</span>
-			<div className="flex flex-1 items-center gap-2 overflow-x-hidden">
-				<Input
-					type="checkbox"
-					className={"accent-blue-500"}
-					onChange={() => toggleStatus(toDo)}
+			<div className="flex flex-1 items-center gap-2 overflow-x-hidden p-2">
+				<Checkbox
+					checked={toDo.status === "COMPLETED"}
+					onCheckedChange={() => {
+						isClickingSaveRef.current = false;
+						toggleStatus(toDo)
+					}}
 					value={toDo.status}
 					title="Mark as complete"
-					checked={toDo.status === "COMPLETED"}
+					className="border-gray-400"
 				/>
-				{editMode === "EDIT_ON" ? (
+				{editMode ? (
 					<Input
 						id={toDo.title + toDo.id}
 						ref={inputRef}
 						defaultValue={toDo.title}
-						onBlur={() => handleOnBlur(toDo)}
 						title="Edit task content"
-						className="w-full max-w-full min-w-0 wrap-break-word rounded-4xl bg-orange-100 px-4"
+						className="bg-gray-100 text-base!"
+						onBlur={handleBlur}
 					/>
 				) : (
 					<div
-						className={`${toDo.status === "COMPLETED" && "line-through text-gray-500"} text-base px-2 wrap-break-word max-w-full`}
+						className={`${toDo.status === "COMPLETED" && "line-through text-neutral-500"} text-base px-2 py-1 wrap-break-word max-w-full`}
 					>
 						{toDo.title}
 					</div>
 				)}
 			</div>
-			<div>
+			<div className="flex gap-1">
 				{toDo.status !== "COMPLETED" && (
 					<Button
-						variant="SECONDARY"
+						variant="outline"
+						size="icon-lg"
+						onMouseDown={() => { isClickingSaveRef.current = editMode; }}
 						onClick={handleToggleEdit}
-						title="Edit task"
-						className="opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto"
+						title={editMode ? "Save task" : "Edit task"}
+						className="opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto cursor-pointer"
 					>
-						<Icon id="edit" />
+						{editMode ? <Icon id="tickMark" /> : <Icon id="edit" />}
 					</Button>
 				)}
 				<Button
-					variant="DANGER"
+					variant="destructive"
+					size="icon-lg"
 					onClick={() => handleDelete(toDo)}
 					title="Delete task"
-					className="opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto"
+					className="opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto cursor-pointer"
 				>
 					<Icon id="trashBin" />
 				</Button>
