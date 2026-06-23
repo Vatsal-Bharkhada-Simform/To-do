@@ -10,7 +10,6 @@ export function ThemeContextProvider({ children }: { children: ReactElement }) {
 	}, [theme]);
     
 	function toggleTheme() {
-        console.log("HII");
 		setTheme((prev) => (prev === "LIGHT" ? "DARK" : "LIGHT"));
 	}
 
