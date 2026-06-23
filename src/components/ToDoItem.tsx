@@ -25,25 +25,38 @@ const ToDoItem = memo(function ({
     const {theme} = useTheme();
     
 	const inputRef = useRef<HTMLInputElement | null>(null);
+	const isClickingSaveRef = useRef(false);
+
+	function handleSave() {
+		if (!inputRef.current) return;
+		const value = inputRef.current.value.trim();
+		if (!isValidToDo(value)) {
+			alert("Please enter a valid input");
+			return;
+		}
+		if (value && value !== toDo.title) {
+			handleUpdate({
+				...toDo,
+				title: value,
+			});
+		}
+		setEditMode(false);
+	}
 
 	function handleToggleEdit() {
 		if (!editMode) {
 			setEditMode(true);
 		} else {
-			if (!inputRef.current) return;
-			const value = inputRef.current?.value.trim();
-			if (!isValidToDo(value)) {
-				alert("Please enter a valid input");
-				return;
-			}
-			if (value && value !== toDo.title) {
-				handleUpdate({
-					...toDo,
-					title: value,
-				});
-			}
-			setEditMode(false);
+			handleSave();
 		}
+	}
+
+	function handleBlur() {
+		if (isClickingSaveRef.current) {
+			isClickingSaveRef.current = false;
+			return;
+		}
+		handleSave();
 	}
 
 	useEffect(() => {
@@ -62,7 +75,10 @@ const ToDoItem = memo(function ({
 			<div className="flex flex-1 items-center gap-2 overflow-x-hidden p-2">
 				<Checkbox
 					checked={toDo.status === "COMPLETED"}
-					onCheckedChange={() => toggleStatus(toDo)}
+					onCheckedChange={() => {
+						isClickingSaveRef.current = false;
+						toggleStatus(toDo)
+					}}
 					value={toDo.status}
 					title="Mark as complete"
 					className="border-gray-400"
@@ -74,6 +90,7 @@ const ToDoItem = memo(function ({
 						defaultValue={toDo.title}
 						title="Edit task content"
 						className="bg-gray-100 text-base!"
+						onBlur={handleBlur}
 					/>
 				) : (
 					<div
@@ -88,6 +105,7 @@ const ToDoItem = memo(function ({
 					<Button
 						variant="outline"
 						size="icon-lg"
+						onMouseDown={() => { isClickingSaveRef.current = editMode; }}
 						onClick={handleToggleEdit}
 						title={editMode ? "Save task" : "Edit task"}
 						className="opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto cursor-pointer"
