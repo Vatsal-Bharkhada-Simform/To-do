@@ -11,13 +11,17 @@ export default function ToDoList() {
 
 	const { theme } = useTheme();
 
-    let toDoToDisplay: Array<ToDo> = [];
-    if(filterOption === "All"){
-        toDoToDisplay = toDo;
-    } else {
-        toDoToDisplay = toDo.filter((item) => item.status === (filterOption === "Completed" ? "COMPLETED" : "PENDING"));
-    }
-    
+	let toDoToDisplay: Array<ToDo> = [];
+	if (filterOption === "All") {
+		toDoToDisplay = toDo;
+	} else {
+		toDoToDisplay = toDo.filter(
+			(item) =>
+				item.status ===
+				(filterOption === "Completed" ? "COMPLETED" : "PENDING")
+		);
+	}
+
 	function toggleStatus(toDo: ToDo) {
 		dispatch(
 			editTodo({

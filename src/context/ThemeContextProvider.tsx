@@ -5,10 +5,10 @@ import { ThemeContext } from "./ThemeContext";
 export function ThemeContextProvider({ children }: { children: ReactElement }) {
 	const [theme, setTheme] = useState<ThemeType>("LIGHT");
 
-    useEffect(() => {
+	useEffect(() => {
 		document.documentElement.classList.toggle("dark", theme === "DARK");
 	}, [theme]);
-    
+
 	function toggleTheme() {
 		setTheme((prev) => (prev === "LIGHT" ? "DARK" : "LIGHT"));
 	}

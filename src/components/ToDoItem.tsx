@@ -22,8 +22,8 @@ const ToDoItem = memo(function ({
 	toggleStatus,
 }: ToDoItemProps) {
 	const [editMode, setEditMode] = useState(false);
-    const {theme} = useTheme();
-    
+	const { theme } = useTheme();
+
 	const inputRef = useRef<HTMLInputElement | null>(null);
 	const isClickingSaveRef = useRef(false);
 
@@ -77,7 +77,7 @@ const ToDoItem = memo(function ({
 					checked={toDo.status === "COMPLETED"}
 					onCheckedChange={() => {
 						isClickingSaveRef.current = false;
-						toggleStatus(toDo)
+						toggleStatus(toDo);
 					}}
 					value={toDo.status}
 					title="Mark as complete"
@@ -105,7 +105,9 @@ const ToDoItem = memo(function ({
 					<Button
 						variant="outline"
 						size="icon-lg"
-						onMouseDown={() => { isClickingSaveRef.current = editMode; }}
+						onMouseDown={() => {
+							isClickingSaveRef.current = editMode;
+						}}
 						onClick={handleToggleEdit}
 						title={editMode ? "Save task" : "Edit task"}
 						className="opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto cursor-pointer"

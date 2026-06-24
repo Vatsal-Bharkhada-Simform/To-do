@@ -24,8 +24,15 @@ type ReducerAction = {
 type ThemeType = "LIGHT" | "DARK";
 
 type ThemeContextType = {
-    theme: ThemeType,
-    toggleTheme: () => void
-}
+	theme: ThemeType;
+	toggleTheme: () => void;
+};
 
-export type { ToDo, ToDoContextType, ReducerAction, FilterOptions, ThemeType, ThemeContextType };
+export type {
+	ToDo,
+	ToDoContextType,
+	ReducerAction,
+	FilterOptions,
+	ThemeType,
+	ThemeContextType,
+};

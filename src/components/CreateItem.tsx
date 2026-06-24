@@ -15,13 +15,13 @@ const filters: Array<FilterOptions> = ["All", "Completed", "Incomplete"];
 export default function CreateItem() {
 	const [error, setError] = useState("");
 
-    const filterOptions = useToDoSelector(state => state.toDo.filterOptions);
-    const dispatch = useToDoDispatch();
-    
+	const filterOptions = useToDoSelector((state) => state.toDo.filterOptions);
+	const dispatch = useToDoDispatch();
+
 	const { theme, toggleTheme } = useTheme();
 
 	function handleFilterChange(newValue: string) {
-        dispatch(changeFilter(newValue as FilterOptions));
+		dispatch(changeFilter(newValue as FilterOptions));
 	}
 
 	function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
@@ -38,12 +38,14 @@ export default function CreateItem() {
 			return;
 		}
 
-		dispatch(addToDo({
-            id: crypto.randomUUID(),
-            createdAt: new Date().toISOString().split("T")[0],
-            status: "PENDING",
-            title: task.trim()
-        }));
+		dispatch(
+			addToDo({
+				id: crypto.randomUUID(),
+				createdAt: new Date().toISOString().split("T")[0],
+				status: "PENDING",
+				title: task.trim(),
+			})
+		);
 
 		e.currentTarget.reset();
 	}

@@ -21,12 +21,10 @@
 		"erasableSyntaxOnly": true,
 		"noFallthroughCasesInSwitch": true,
 
-        /* Shadcn */
-        "paths": {
-            "@/*": [
-                "./src/*"
-            ]
-        }
-    },
+		/* Shadcn */
+		"paths": {
+			"@/*": ["./src/*"]
+		}
+	},
 	"include": ["src"]
 }
