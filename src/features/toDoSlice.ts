@@ -56,7 +56,6 @@ export const toDoSlice = createSlice({
 
         changeFilter: (state, action: PayloadAction<FilterOptions>) => {
             state.filterOptions = action.payload;
-            console.log(state.filterOptions);
         }
 	},
 });

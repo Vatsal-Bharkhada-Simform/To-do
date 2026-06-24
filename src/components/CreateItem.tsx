@@ -1,4 +1,7 @@
 import { useState } from "react";
+import { useTheme } from "@/context/useTheme";
+import { useToDoDispatch, useToDoSelector } from "@/app/hooks";
+import { addToDo, changeFilter } from "@/features/toDoSlice";
 import type { FilterOptions } from "../types/to_do_type";
 import isValidToDo from "../utils/validateInput";
 import { Button } from "./ui/button";
@@ -6,9 +9,6 @@ import { Input } from "./ui/input";
 import { Tabs, TabsList, TabsTrigger } from "./ui/tabs";
 import { Switch } from "./ui/switch";
 import { Label } from "./ui/label";
-import { useTheme } from "@/context/useTheme";
-import { useToDoDispatch, useToDoSelector } from "@/app/hooks";
-import { addToDo, changeFilter } from "@/features/toDoSlice";
 
 const filters: Array<FilterOptions> = ["All", "Completed", "Incomplete"];
 

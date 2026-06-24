@@ -1,12 +1,12 @@
 import { memo, useEffect, useRef, useState } from "react";
+import { useTheme } from "@/context/useTheme";
 import type { ToDo } from "../types/to_do_type";
 import getFormattedDate from "../utils/formatDate";
-import { Button } from "./ui/button";
-import Icon from "./Icon";
-import { Input } from "./ui/input";
 import isValidToDo from "../utils/validateInput";
+import Icon from "./Icon";
+import { Button } from "./ui/button";
+import { Input } from "./ui/input";
 import { Checkbox } from "./ui/checkbox";
-import { useTheme } from "@/context/useTheme";
 
 type ToDoItemProps = {
 	toDo: ToDo;

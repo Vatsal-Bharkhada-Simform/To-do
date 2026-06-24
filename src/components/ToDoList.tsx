@@ -1,8 +1,8 @@
-import type { ToDo } from "../types/to_do_type";
-import ToDoItem from "./ToDoItem";
 import { useTheme } from "@/context/useTheme";
 import { useToDoDispatch, useToDoSelector } from "@/app/hooks";
 import { deleteToDo, editTodo } from "@/features/toDoSlice";
+import type { ToDo } from "../types/to_do_type";
+import ToDoItem from "./ToDoItem";
 
 export default function ToDoList() {
 	const toDo = useToDoSelector((state) => state.toDo.toDoItems);
