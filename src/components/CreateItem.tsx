@@ -1,5 +1,4 @@
-import { useContext, useState } from "react";
-import { ToDoContext } from "../context/ToDoContext";
+import { useState } from "react";
 import type { FilterOptions } from "../types/to_do_type";
 import isValidToDo from "../utils/validateInput";
 import { Button } from "./ui/button";
@@ -8,18 +7,21 @@ import { Tabs, TabsList, TabsTrigger } from "./ui/tabs";
 import { Switch } from "./ui/switch";
 import { Label } from "./ui/label";
 import { useTheme } from "@/context/useTheme";
+import { useToDoDispatch, useToDoSelector } from "@/app/hooks";
+import { addToDo, changeFilter } from "@/features/toDoSlice";
 
 const filters: Array<FilterOptions> = ["All", "Completed", "Incomplete"];
 
 export default function CreateItem() {
 	const [error, setError] = useState("");
 
-	const { dispatch, filterOptions, setFilterOptions } =
-		useContext(ToDoContext);
+    const filterOptions = useToDoSelector(state => state.toDo.filterOptions);
+    const dispatch = useToDoDispatch();
+    
 	const { theme, toggleTheme } = useTheme();
 
 	function handleFilterChange(newValue: string) {
-		setFilterOptions(newValue as FilterOptions);
+        dispatch(changeFilter(newValue as FilterOptions));
 	}
 
 	function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
@@ -36,15 +38,12 @@ export default function CreateItem() {
 			return;
 		}
 
-		dispatch({
-			type: "ADD",
-			payload: {
-				id: "dummy_id", // Placeholder id as reducer would dynamically provide id
-				title: task.trim(),
-				status: "PENDING",
-				createdAt: new Date(),
-			},
-		});
+		dispatch(addToDo({
+            id: crypto.randomUUID(),
+            createdAt: new Date().toISOString().split("T")[0],
+            status: "PENDING",
+            title: task.trim()
+        }));
 
 		e.currentTarget.reset();
 	}

@@ -4,7 +4,7 @@ type ToDo = {
 	title: string;
 	id: string;
 	status: "PENDING" | "COMPLETED";
-	createdAt: Date;
+	createdAt: string;
 };
 
 type FilterOptions = "All" | "Completed" | "Incomplete";
