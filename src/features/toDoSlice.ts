@@ -1,4 +1,4 @@
-import type { FilterOptions, ToDo } from "@/types/to_do_type";
+import { filters, type FilterOptions, type ToDo } from "@/types/to_do_type";
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
 type InitialStateType = {
@@ -18,6 +18,15 @@ function loadInitialState(): InitialStateType {
 			};
 		}
 		const parsedData = JSON.parse(state) as InitialStateType;
+		if (
+			typeof parsedData !== "object" ||
+			!parsedData.toDoItems ||
+			!Array.isArray(parsedData.toDoItems) ||
+			!parsedData.filterOptions ||
+			!filters.includes(parsedData.filterOptions)
+		) {
+			throw new Error("Defective toDo data. Data will be reset.");
+		}
 
 		const todayDate = new Date().toISOString().split("T")[0];
 		parsedData.toDoItems = parsedData.toDoItems.filter(

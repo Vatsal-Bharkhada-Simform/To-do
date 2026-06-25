@@ -1,5 +1,3 @@
-import type { Dispatch, SetStateAction } from "react";
-
 type ToDo = {
 	title: string;
 	id: string;
@@ -7,19 +5,9 @@ type ToDo = {
 	createdAt: string;
 };
 
-type FilterOptions = "All" | "Completed" | "Incomplete";
+export const filters = ["All", "Completed", "Incomplete"] as const;
 
-type ToDoContextType = {
-	toDo: Array<ToDo>;
-	filterOptions: FilterOptions;
-	setFilterOptions: Dispatch<SetStateAction<FilterOptions>>;
-	dispatch: React.ActionDispatch<[action: ReducerAction]>;
-};
-
-type ReducerAction = {
-	type: "ADD" | "UPDATE" | "DELETE" | "CLEAR";
-	payload: ToDo;
-};
+type FilterOptions = typeof filters[number];
 
 type ThemeType = "LIGHT" | "DARK";
 
@@ -30,8 +18,6 @@ type ThemeContextType = {
 
 export type {
 	ToDo,
-	ToDoContextType,
-	ReducerAction,
 	FilterOptions,
 	ThemeType,
 	ThemeContextType,
