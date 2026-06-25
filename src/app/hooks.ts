@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import type { RootState, toDoDispatch } from "./store";
+import type { RootState, ToDoDispatch } from "./store";
 
-export const useToDoDispatch = useDispatch.withTypes<toDoDispatch>();
+export const useToDoDispatch = useDispatch.withTypes<ToDoDispatch>();
 export const useToDoSelector = useSelector.withTypes<RootState>();

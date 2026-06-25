@@ -1,6 +1,6 @@
 import { useTheme } from "@/context/useTheme";
 import { useToDoDispatch, useToDoSelector } from "@/app/hooks";
-import { deleteToDo, editTodo } from "@/features/toDoSlice";
+import { deleteToDo, editToDo } from "@/features/toDoSlice";
 import type { ToDo } from "../types/to_do_type";
 import ToDoItem from "./ToDoItem";
 
@@ -24,7 +24,7 @@ export default function ToDoList() {
 
 	function toggleStatus(toDo: ToDo) {
 		dispatch(
-			editTodo({
+			editToDo({
 				...toDo,
 				status: toDo.status === "COMPLETED" ? "PENDING" : "COMPLETED",
 			})
@@ -36,7 +36,7 @@ export default function ToDoList() {
 	}
 
 	function handleUpdate(toDo: ToDo) {
-		dispatch(editTodo(toDo));
+		dispatch(editToDo(toDo));
 	}
 
 	function populateToDoItems() {

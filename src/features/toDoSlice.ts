@@ -28,11 +28,6 @@ function loadInitialState(): InitialStateType {
 			throw new Error("Defective toDo data. Data will be reset.");
 		}
 
-		const todayDate = new Date().toISOString().split("T")[0];
-		parsedData.toDoItems = parsedData.toDoItems.filter(
-			(item) => item.createdAt === todayDate
-		);
-
 		return parsedData;
 	} catch (err) {
 		console.error("Error while fetching to-do data from localStorage");
@@ -44,7 +39,15 @@ function loadInitialState(): InitialStateType {
 	}
 }
 
-const initialState: InitialStateType = loadInitialState();
+function clearExpiredToDos(initialState: InitialStateType){
+    const currentDate = new Date().toISOString().split("T")[0];
+	initialState.toDoItems = initialState.toDoItems.filter(
+		(item) => item.createdAt === currentDate
+	);
+    return initialState;
+}
+
+const initialState: InitialStateType = clearExpiredToDos(loadInitialState());
 
 export const toDoSlice = createSlice({
 	name: "toDo",
@@ -54,7 +57,7 @@ export const toDoSlice = createSlice({
 			state.toDoItems.push(action.payload);
 		},
 
-		editTodo: (state, action: PayloadAction<ToDo>) => {
+		editToDo: (state, action: PayloadAction<ToDo>) => {
 			const index = state.toDoItems.findIndex(
 				(item) => item.id === action.payload.id
 			);
@@ -75,6 +78,6 @@ export const toDoSlice = createSlice({
 	},
 });
 
-export const { addToDo, editTodo, deleteToDo, changeFilter } =
+export const { addToDo, editToDo, deleteToDo, changeFilter } =
 	toDoSlice.actions;
 export default toDoSlice.reducer;

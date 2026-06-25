@@ -18,6 +18,6 @@ toDoStore.subscribe(() => {
 });
 
 export type RootState = ReturnType<typeof toDoStore.getState>;
-export type toDoDispatch = typeof toDoStore.dispatch;
+export type ToDoDispatch = typeof toDoStore.dispatch;
 
 export default toDoStore;
