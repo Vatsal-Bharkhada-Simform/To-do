@@ -1,8 +1,15 @@
 import { useTheme } from "@/context/useTheme";
 import { useToDoDispatch, useToDoSelector } from "@/app/hooks";
 import { deleteToDo, editToDo } from "@/features/toDoSlice";
-import type { ToDoType } from "../types/to_do_type";
+import type { FilterOptions, ToDoType } from "../types/to_do_type";
 import ToDoItem from "./ToDoItem";
+import { useMemo } from "react";
+
+const filterStatusMap: Record<FilterOptions, ToDoType["status"] | null> = {
+	All: null,
+	Completed: "COMPLETED",
+	Incomplete: "PENDING",
+};
 
 export default function ToDoList() {
 	const toDoItems = useToDoSelector((state) => state.toDo.toDoItems);
@@ -11,16 +18,15 @@ export default function ToDoList() {
 
 	const { theme } = useTheme();
 
-	let toDoToDisplay: Array<ToDoType> = [];
-	if (filterOption === "All") {
-		toDoToDisplay = toDoItems;
-	} else {
-		toDoToDisplay = toDoItems.filter(
-			(item) =>
-				item.status ===
-				(filterOption === "Completed" ? "COMPLETED" : "PENDING")
-		);
-	}
+	const toDoToDisplay: Array<ToDoType> = useMemo(() => {
+		if (filterOption === "All") {
+			return toDoItems;
+		} else {
+			return toDoItems.filter(
+				(item) => item.status === filterStatusMap[filterOption]
+			);
+		}
+	}, [toDoItems, filterOption]);
 
 	function toggleStatus(toDo: ToDoType) {
 		dispatch(
