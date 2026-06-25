@@ -19,7 +19,9 @@ export default function CreateItem() {
 	const { theme, toggleTheme } = useTheme();
 
 	function handleFilterChange(newValue: string) {
-		dispatch(changeFilter(newValue as FilterOptions));
+        if(filterOptions.includes(newValue)){
+            dispatch(changeFilter(newValue as FilterOptions));
+        }
 	}
 
 	function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
@@ -39,7 +41,7 @@ export default function CreateItem() {
 		dispatch(
 			addToDo({
 				id: crypto.randomUUID(),
-				createdAt: new Date().toISOString().split("T")[0],
+				createdAt: new Date().toISOString(),
 				status: "PENDING",
 				title: task.trim(),
 			})

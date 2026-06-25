@@ -42,7 +42,7 @@ function loadInitialState(): InitialStateType {
 function clearExpiredToDos(initialState: InitialStateType){
     const currentDate = new Date().toISOString().split("T")[0];
 	initialState.toDoItems = initialState.toDoItems.filter(
-		(item) => item.createdAt === currentDate
+		(item) => item.createdAt.split("T")[0] === currentDate
 	);
     return initialState;
 }
