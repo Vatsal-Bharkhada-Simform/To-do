@@ -1,4 +1,4 @@
-type ToDo = {
+type ToDoType = {
 	title: string;
 	id: string;
 	status: "PENDING" | "COMPLETED";
@@ -17,7 +17,7 @@ type ThemeContextType = {
 };
 
 export type {
-	ToDo,
+	ToDoType,
 	FilterOptions,
 	ThemeType,
 	ThemeContextType,

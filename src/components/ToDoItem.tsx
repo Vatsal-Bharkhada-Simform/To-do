@@ -1,6 +1,6 @@
 import { memo, useEffect, useRef, useState } from "react";
 import { useTheme } from "@/context/useTheme";
-import type { ToDo } from "../types/to_do_type";
+import type { ToDoType } from "../types/to_do_type";
 import getFormattedDate from "../utils/formatDate";
 import isValidToDo from "../utils/validateInput";
 import Icon from "./Icon";
@@ -9,10 +9,10 @@ import { Input } from "./ui/input";
 import { Checkbox } from "./ui/checkbox";
 
 type ToDoItemProps = {
-	toDo: ToDo;
-	toggleStatus: (toDo: ToDo) => void;
-	handleDelete: (toDo: ToDo) => void;
-	handleUpdate: (toDo: ToDo) => void;
+	toDo: ToDoType;
+	toggleStatus: (toDo: ToDoType) => void;
+	handleDelete: (toDo: ToDoType) => void;
+	handleUpdate: (toDo: ToDoType) => void;
 };
 
 const ToDoItem = memo(function ({

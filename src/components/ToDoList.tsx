@@ -1,28 +1,28 @@
 import { useTheme } from "@/context/useTheme";
 import { useToDoDispatch, useToDoSelector } from "@/app/hooks";
 import { deleteToDo, editToDo } from "@/features/toDoSlice";
-import type { ToDo } from "../types/to_do_type";
+import type { ToDoType } from "../types/to_do_type";
 import ToDoItem from "./ToDoItem";
 
 export default function ToDoList() {
-	const toDo = useToDoSelector((state) => state.toDo.toDoItems);
+	const toDoItems = useToDoSelector((state) => state.toDo.toDoItems);
 	const filterOption = useToDoSelector((state) => state.toDo.filterOptions);
 	const dispatch = useToDoDispatch();
 
 	const { theme } = useTheme();
 
-	let toDoToDisplay: Array<ToDo> = [];
+	let toDoToDisplay: Array<ToDoType> = [];
 	if (filterOption === "All") {
-		toDoToDisplay = toDo;
+		toDoToDisplay = toDoItems;
 	} else {
-		toDoToDisplay = toDo.filter(
+		toDoToDisplay = toDoItems.filter(
 			(item) =>
 				item.status ===
 				(filterOption === "Completed" ? "COMPLETED" : "PENDING")
 		);
 	}
 
-	function toggleStatus(toDo: ToDo) {
+	function toggleStatus(toDo: ToDoType) {
 		dispatch(
 			editToDo({
 				...toDo,
@@ -31,11 +31,11 @@ export default function ToDoList() {
 		);
 	}
 
-	function handleDelete(toDo: ToDo) {
+	function handleDelete(toDo: ToDoType) {
 		dispatch(deleteToDo(toDo));
 	}
 
-	function handleUpdate(toDo: ToDo) {
+	function handleUpdate(toDo: ToDoType) {
 		dispatch(editToDo(toDo));
 	}
 

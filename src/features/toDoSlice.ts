@@ -1,8 +1,8 @@
-import { filters, type FilterOptions, type ToDo } from "@/types/to_do_type";
+import { filters, type FilterOptions, type ToDoType } from "@/types/to_do_type";
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
 type InitialStateType = {
-	toDoItems: Array<ToDo>;
+	toDoItems: Array<ToDoType>;
 	filterOptions: FilterOptions;
 };
 
@@ -53,11 +53,11 @@ export const toDoSlice = createSlice({
 	name: "toDo",
 	initialState,
 	reducers: {
-		addToDo: (state, action: PayloadAction<ToDo>) => {
+		addToDo: (state, action: PayloadAction<ToDoType>) => {
 			state.toDoItems.push(action.payload);
 		},
 
-		editToDo: (state, action: PayloadAction<ToDo>) => {
+		editToDo: (state, action: PayloadAction<ToDoType>) => {
 			const index = state.toDoItems.findIndex(
 				(item) => item.id === action.payload.id
 			);
@@ -66,7 +66,7 @@ export const toDoSlice = createSlice({
 			}
 		},
 
-		deleteToDo: (state, action: PayloadAction<ToDo>) => {
+		deleteToDo: (state, action: PayloadAction<ToDoType>) => {
 			state.toDoItems = state.toDoItems.filter(
 				(item) => item.id !== action.payload.id
 			);
