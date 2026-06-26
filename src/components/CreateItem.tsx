@@ -19,7 +19,7 @@ export default function CreateItem() {
 	const { theme, toggleTheme } = useTheme();
 
 	function handleFilterChange(newValue: string) {
-        if(filterOptions.includes(newValue)){
+        if(filters.findIndex(filter => filter === newValue) !== -1){
             dispatch(changeFilter(newValue as FilterOptions));
         }
 	}
